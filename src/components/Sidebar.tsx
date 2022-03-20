@@ -102,7 +102,7 @@ const ImagePreview: React.FC<{ image: string; imageIndex: number }> = ({ image, 
         src={image}
         className={cn(
           'h-auto block w-auto object-scale-down max-h-40 rounded',
-          currentImageIndex === imageIndex ? 'opacity-100' : 'opacity-20',
+          currentImageIndex === imageIndex ? 'opacity-100' : 'opacity-20 group-hover:opacity-100',
         )}
         onClick={() => setCurrentImageIndex(imageIndex)}
       />
