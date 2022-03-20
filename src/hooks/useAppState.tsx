@@ -2,7 +2,7 @@ import ColorThief from 'colorthief'
 import image from 'next/image'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { ImageB64String, RGBColor } from 'src/types'
-import { addImageFromImageUrl } from '~/components/Dropzone'
+import { imageFromImageUrl } from '~/utils/image'
 import { usePersistedState } from './usePersistedState'
 
 export type AppState = {
@@ -70,8 +70,11 @@ export function AppStateProvider({ children }: ProviderProps) {
     if (images.length > 0) return
 
     const imageUrl = 'https://source.unsplash.com/600x600'
-    addImageFromImageUrl({ setImages, imageUrl })
-  }, [images, setColors, setImages])
+    imageFromImageUrl({ imageUrl }).then((imageB64) => {
+      setImages((_) => [..._, imageB64])
+      setCurrentImageIndex((_) => _ + 1)
+    })
+  }, [images, setCurrentImageIndex, setImages])
 
   useEffect(() => {
     const imageUrl = images[currentImageIndex]
