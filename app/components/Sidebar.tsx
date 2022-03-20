@@ -1,60 +1,48 @@
-import cn from "classnames";
-import { RgbColorPicker } from "react-colorful";
-import { useAppState } from "~/hooks/useAppState";
-import { rgb } from "~/utils/color";
+import cn from 'classnames'
+import { RgbColorPicker } from 'react-colorful'
+import { useAppState } from '~/hooks/useAppState'
+import { rgb } from '~/utils/color'
 
 export function Sidebar() {
   return (
     <aside
       className={cn(
-        "w-[32rem] flex flex-col overflow-y-auto",
-        "p-4 space-y-8",
-        "bg-neutral-900 ",
-        "border-l border-neutral-800"
+        'w-[32rem] flex flex-col overflow-y-auto',
+        'p-4 space-y-8',
+        'bg-neutral-900 ',
+        'border-l border-neutral-800',
       )}
     >
       <ImagePreview />
       <ColorPickers />
     </aside>
-  );
+  )
 }
 
 function ImagePreview() {
-  const { image, colors } = useAppState();
+  const { image, colors } = useAppState()
 
-  if (!image) return null;
+  if (!image) return null
 
   return (
-    <section
-      className={cn(
-        "flex flex-col space-y-2",
-        "pb-4 border-b border-neutral-800"
-      )}
-    >
+    <section className={cn('flex flex-col space-y-2', 'pb-4 border-b border-neutral-800')}>
       <span className="text-sm text-neutral-50">Original Image</span>
 
-      <img
-        alt="Preview"
-        src={`data:image/jpg;base64,${image}`}
-        className="max-h-10"
-      />
+      <div className="max-h-40">
+        <img alt="Preview" src={image} className="max-h-full rounded" />
+      </div>
 
-      <div className="flex gap-2">
-        {colors.map((c) => (
-          <div
-            className="w-8 h-8 rounded-full"
-            style={{
-              backgroundColor: rgb(c),
-            }}
-          ></div>
+      <div className="flex gap-2 flex-wrap">
+        {colors.map((c, i) => (
+          <div key={i} className="w-8 h-8 rounded-full shrink-0" style={{ backgroundColor: rgb(c) }} />
         ))}
       </div>
     </section>
-  );
+  )
 }
 
 function ColorPickers() {
-  const { colors, setColor } = useAppState();
+  const { colors, setColor } = useAppState()
 
   return (
     <section className="flex flex-col space-y-4">
@@ -69,10 +57,10 @@ function ColorPickers() {
             b: c.value[2],
           }}
           onChange={(c) => {
-            setColor(idx, { type: "rgb", value: [c.r, c.g, c.b] });
+            setColor(idx, { type: 'rgb', value: [c.r, c.g, c.b] })
           }}
         />
       ))}
     </section>
-  );
+  )
 }
