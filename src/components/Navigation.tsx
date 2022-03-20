@@ -14,6 +14,7 @@ export function Navigation() {
       )}
     >
       <Item href="/contrasts">Contrasts</Item>
+      <Item href="/color-clusters">Color Clusters</Item>
       <Item href="/linear">Linear Gradients</Item>
       <Item href="/radial">Radial Gradients</Item>
       <Item href="/additive">Additive Gradients</Item>
