@@ -21,9 +21,11 @@ export function simpleGradientToCSS(gradient: Gradient, offsets: SimpleGradientO
   }
 
   if (gradient.type === 'radial') {
-    const stops = gradient.stops.map((s) => `${rgb(s.color)} ${s.pos ? `${s.pos}%` : ''}`).join(', ')
+    const posX = gradient.posX ?? 50
+    const posY = gradient.posY ?? 50
+    const stops = gradient.stops.map((s) => `${rgb(s.color)}`).join(', ')
 
-    return `radial-gradient(${stops})`
+    return `radial-gradient(at ${posX}% ${posY}%, ${stops})`
   }
 
   return ''

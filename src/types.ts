@@ -24,7 +24,9 @@ export type LinearGradient = {
 
 export type RadialGradient = {
   type: 'radial'
-  stops: Array<{ color: Color; pos?: number }>
+  stops: Array<{ color: Color }>
+  posX?: number
+  posY?: number
 }
 
 export type MeshGradient = {

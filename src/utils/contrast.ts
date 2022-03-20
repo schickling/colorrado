@@ -16,5 +16,7 @@ export function contrastRatio(c1: Color, c2: Color) {
   let l1 = relativeLuminance(c1)
   let l2 = relativeLuminance(c2)
 
-  return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05)
+  const ratio = (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05)
+
+  return ratio.toFixed(2)
 }
