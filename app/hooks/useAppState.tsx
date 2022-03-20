@@ -6,13 +6,13 @@ import {
   useContext,
   useState,
 } from "react";
-import { Color, ImageDataURI } from "~/types";
+import { ImageDataURI, RGBColor } from "~/types";
 
 type AppState = {
   image: ImageDataURI | null;
   setImage: Dispatch<SetStateAction<ImageDataURI | null>>;
-  colors: Color[];
-  setColors: Dispatch<SetStateAction<Color[]>>;
+  colors: RGBColor[];
+  setColors: Dispatch<SetStateAction<RGBColor[]>>;
 };
 
 const DEFAULT_STATE: AppState = {
@@ -57,7 +57,7 @@ export function AppStateProvider({ children }: ProviderProps) {
 export function useAppState() {
   const { image, setImage, colors, setColors } = useContext(Context);
 
-  const setColor = (idx: number, color: Color) => {
+  const setColor = (idx: number, color: RGBColor) => {
     setColors(colors.map((c, i) => (i === idx ? color : c)));
   };
 
