@@ -3,7 +3,7 @@ import { RgbColorPicker } from 'react-colorful'
 import { useAppState } from 'src/hooks/useAppState'
 import { rgb } from 'src/utils/color'
 
-export function Sidebar() {
+export const Sidebar: React.FC = () => {
   return (
     <aside
       className={cn(
@@ -13,13 +13,29 @@ export function Sidebar() {
         'border-l border-neutral-800',
       )}
     >
+      <AnimateCheckbox />
       <ImagePreview />
       <ColorPickers />
     </aside>
   )
 }
 
-function ImagePreview() {
+const AnimateCheckbox: React.FC = () => {
+  const { animate, setAnimate } = useAppState()
+
+  return (
+    <input
+      type="checkbox"
+      checked={animate}
+      onChange={(e) => {
+        console.log(e.currentTarget.value)
+        setAnimate(e.currentTarget.value === 'true')
+      }}
+    />
+  )
+}
+
+const ImagePreview: React.FC = () => {
   const { image, colors } = useAppState()
 
   if (!image) return null
@@ -28,8 +44,8 @@ function ImagePreview() {
     <section className={cn('flex flex-col space-y-2', 'pb-4 border-b border-neutral-800')}>
       <span className="text-sm text-neutral-50">Original Image</span>
 
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img alt="Preview" src={image} className="h-auto w-auto object-scale-down max-h-40 rounded" />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img alt="Preview" src={image} className="h-auto w-auto object-scale-down max-h-40 rounded" />
 
       <div className="flex gap-2 flex-wrap">
         {colors.map((c, i) => (
@@ -40,7 +56,7 @@ function ImagePreview() {
   )
 }
 
-function ColorPickers() {
+const ColorPickers: React.FC = () => {
   const { colors, setColor } = useAppState()
 
   return (
