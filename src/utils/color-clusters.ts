@@ -22,7 +22,7 @@ type GrowingTable = GrowingTableItem[]
 /** Array index regarding the `colors` param */
 type ColorIndex = number
 
-export const getMostSimilarColors = (colors: RGBColor[], clusterSize: number): RGBColor[] => {
+export const getMostSimilarColors = (colors: RGBColor[], clusterSize: number, resultIndex = 0): RGBColor[] => {
   if (clusterSize > colors.length) {
     throw new Error('getMostSimilarColors: clusterSize must be less than or equal to the number of colors')
   }
@@ -32,6 +32,8 @@ export const getMostSimilarColors = (colors: RGBColor[], clusterSize: number): R
   // console.table(distanceTable)
 
   let growingTable: GrowingTable = distanceTable.map(([c1, c2, d]) => [d, [c1, c2]])
+
+  // TODO filter out duplicates [1, 2] === [2, 1]
 
   for (let k = 2; k < clusterSize; k++) {
     const newGrowingTable: GrowingTable = []
@@ -50,6 +52,8 @@ export const getMostSimilarColors = (colors: RGBColor[], clusterSize: number): R
             return [previousDistance + additionalDistance, [...previousColorIndexes, nextColorIndex]]
           }),
       )
+
+      // TODO filter out duplicates [1, 2] === [2, 1]
     }
 
     // console.log('newGrowingTable')
@@ -63,7 +67,7 @@ export const getMostSimilarColors = (colors: RGBColor[], clusterSize: number): R
 
   // console.table(growingTable)
 
-  return growingTable[0][1].map((index) => colors[index])
+  return growingTable[resultIndex][1].map((index) => colors[index])
 }
 
 const colorsAreEqual =
