@@ -5,6 +5,8 @@ import { setImageAndColorsFromImageUrl } from '~/components/Dropzone'
 type AppState = {
   animate: boolean
   setAnimate: Dispatch<SetStateAction<boolean>>
+  animateSpeedMultiplier: number
+  setAnimateSpeedMultiplier: Dispatch<SetStateAction<number>>
   image: ImageDataURI | null
   setImage: Dispatch<SetStateAction<ImageDataURI | null>>
   colors: RGBColor[]
@@ -12,8 +14,10 @@ type AppState = {
 }
 
 const DEFAULT_STATE: AppState = {
-  animate: false,
+  animate: true,
   setAnimate: () => {},
+  animateSpeedMultiplier: 1,
+  setAnimateSpeedMultiplier: () => {},
   image: null,
   setImage: () => {},
   colors: [
@@ -36,6 +40,7 @@ const Context = createContext<AppState>(DEFAULT_STATE)
 type ProviderProps = PropsWithChildren<{}>
 export function AppStateProvider({ children }: ProviderProps) {
   const [animate, setAnimate] = useState(DEFAULT_STATE.animate)
+  const [animateSpeedMultiplier, setAnimateSpeedMultiplier] = useState(DEFAULT_STATE.animateSpeedMultiplier)
   const [colors, setColors] = useState(DEFAULT_STATE.colors)
   const [image, setImage] = useState(DEFAULT_STATE.image)
 
@@ -52,6 +57,8 @@ export function AppStateProvider({ children }: ProviderProps) {
       value={{
         animate,
         setAnimate,
+        animateSpeedMultiplier,
+        setAnimateSpeedMultiplier,
         image,
         setImage,
         colors,
@@ -64,17 +71,14 @@ export function AppStateProvider({ children }: ProviderProps) {
 }
 
 export function useAppState() {
-  const { animate, setAnimate, image, setImage, colors, setColors } = useContext(Context)
+  const { colors, setColors, ...state } = useContext(Context)
 
   const setColor = (idx: number, color: RGBColor) => {
     setColors(colors.map((c, i) => (i === idx ? color : c)))
   }
 
   return {
-    animate,
-    setAnimate,
-    image,
-    setImage,
+    ...state,
     colors,
     setColor,
     setColors,

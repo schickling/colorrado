@@ -20,15 +20,11 @@ export type LinearGradient = {
   /* Gradient angle in radians */
   angle: number
   stops: Array<{ color: Color; pos?: number }>
-  /* Color hint, as percentage */
-  hint?: number
 }
 
 export type RadialGradient = {
   type: 'radial'
   stops: Array<{ color: Color; pos?: number }>
-  /* Color hint, as percentage */
-  hint?: number
 }
 
 export type MeshGradient = {

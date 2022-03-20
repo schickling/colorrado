@@ -1,20 +1,29 @@
 import { Gradient } from '~/types'
 import { rgb } from './color'
 
-export function simpleGradientToCSS(gradient: Gradient): string {
-  if (gradient.type === 'linear') {
-    const angle = `${gradient.angle}deg`
-    const stops = gradient.stops.map((s) => `${rgb(s.color)} ${s.pos ? `${s.pos}%` : ''}`).join(', ')
-    const colorHint = gradient.hint ? `${gradient.hint}%` : ''
+type SimpleGradientOffsets = {
+  pos?: number
+  angle?: number
+}
+export function simpleGradientToCSS(gradient: Gradient, offsets: SimpleGradientOffsets = {}): string {
+  const { pos: posOffset = 0, angle: angleOffset = 0 } = offsets
 
-    return `linear-gradient(${angle}, ${stops} ${colorHint})`
+  if (gradient.type === 'linear') {
+    const angle = `${gradient.angle + angleOffset}deg`
+    const stops = gradient.stops
+      .map((s, i) => {
+        const pos = s.pos ?? (1 / (gradient.stops.length - 1)) * i * 100
+        return `${rgb(s.color)} ${pos + posOffset}%`
+      })
+      .join(', ')
+
+    return `linear-gradient(${angle}, ${stops})`
   }
 
   if (gradient.type === 'radial') {
     const stops = gradient.stops.map((s) => `${rgb(s.color)} ${s.pos ? `${s.pos}%` : ''}`).join(', ')
-    const colorHint = gradient.hint ? `${gradient.hint}%` : ''
 
-    return `radial-gradient(${stops} ${colorHint})`
+    return `radial-gradient(${stops})`
   }
 
   return ''

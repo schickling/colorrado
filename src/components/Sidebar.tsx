@@ -24,17 +24,38 @@ export const Sidebar: React.FC = () => {
 }
 
 const AnimateCheckbox: React.FC = () => {
-  const { animate, setAnimate } = useAppState()
+  const { animate, animateSpeedMultiplier, setAnimate, setAnimateSpeedMultiplier } = useAppState()
+
+  const multiplierToValue = (multiplier: number) => {
+    if (multiplier > 1) return multiplier
+    if (multiplier === 1) return 0
+    return multiplier * 10 - 11
+  }
+
+  const valueToMultiplier = (value: number) => {
+    if (value > 0) return value
+    if (value === 0) return 1
+    return (value + 11) / 10
+  }
 
   return (
-    <input
-      type="checkbox"
-      checked={animate}
-      onChange={(e) => {
-        console.log(e.currentTarget.value)
-        setAnimate(e.currentTarget.value === 'true')
-      }}
-    />
+    <>
+      <label className="flex items-center">
+        <input type="checkbox" checked={animate} onChange={(e) => setAnimate(e.currentTarget.checked)} />
+        <span className="ml-2 text-sm text-neutral-50">Animate</span>
+      </label>
+
+      <label className="flex items-center">
+        <input
+          type="range"
+          min={-11}
+          max={10}
+          value={multiplierToValue(animateSpeedMultiplier)}
+          onChange={(e) => setAnimateSpeedMultiplier(valueToMultiplier(e.currentTarget.valueAsNumber))}
+        />
+        <span className="ml-2 text-sm text-neutral-50">Speed Multiplier: {animateSpeedMultiplier}</span>
+      </label>
+    </>
   )
 }
 

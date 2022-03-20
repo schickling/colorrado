@@ -19,7 +19,6 @@ const Page: React.FC = () => {
             { color: { type: 'rgba', value: [...colors[0].value, 1] } },
             { color: { type: 'rgba', value: [...colors[0].value, 0] } },
           ],
-          hint: 100,
         },
         {
           type: 'linear',
@@ -28,7 +27,6 @@ const Page: React.FC = () => {
             { color: { type: 'rgba', value: [...colors[1].value, 1] } },
             { color: { type: 'rgba', value: [...colors[1].value, 0] } },
           ],
-          hint: 100,
         },
         {
           type: 'linear',
@@ -37,7 +35,6 @@ const Page: React.FC = () => {
             { color: { type: 'rgba', value: [...colors[2].value, 1] } },
             { color: { type: 'rgba', value: [...colors[2].value, 0] } },
           ],
-          hint: 100,
         },
       ],
     }
@@ -51,7 +48,6 @@ const Page: React.FC = () => {
             { color: { type: 'rgba', value: [...colors[0].value, 1] } },
             { color: { type: 'rgba', value: [...colors[0].value, 0] } },
           ],
-          hint: 100,
         },
         {
           type: 'linear',
@@ -60,7 +56,6 @@ const Page: React.FC = () => {
             { color: { type: 'rgba', value: [...colors[5].value, 1] } },
             { color: { type: 'rgba', value: [...colors[5].value, 0] } },
           ],
-          hint: 100,
         },
         {
           type: 'linear',
@@ -69,7 +64,6 @@ const Page: React.FC = () => {
             { color: { type: 'rgba', value: [...colors[2].value, 1] } },
             { color: { type: 'rgba', value: [...colors[2].value, 0] } },
           ],
-          hint: 100,
         },
       ],
     }
