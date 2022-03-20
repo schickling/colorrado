@@ -7,7 +7,7 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        'w-[32rem] flex flex-col overflow-y-auto',
+        'w-96 flex flex-col overflow-y-auto',
         'p-4 space-y-8',
         'bg-neutral-900 ',
         'border-l border-neutral-800',
@@ -28,10 +28,8 @@ function ImagePreview() {
     <section className={cn('flex flex-col space-y-2', 'pb-4 border-b border-neutral-800')}>
       <span className="text-sm text-neutral-50">Original Image</span>
 
-      <div className="max-h-40">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img alt="Preview" src={image} className="max-h-full rounded" />
-      </div>
+        <img alt="Preview" src={image} className="h-auto w-auto object-scale-down max-h-40 rounded" />
 
       <div className="flex gap-2 flex-wrap">
         {colors.map((c, i) => (

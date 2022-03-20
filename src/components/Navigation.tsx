@@ -7,7 +7,7 @@ export function Navigation() {
   return (
     <aside
       className={cn(
-        'w-[32rem] flex flex-col overflow-y-auto',
+        'w-60 flex flex-col overflow-y-auto',
         'p-4 space-y-2',
         'bg-neutral-900 ',
         'border-r border-neutral-800',
