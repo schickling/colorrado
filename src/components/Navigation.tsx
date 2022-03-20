@@ -13,7 +13,8 @@ export function Navigation() {
         'border-r border-neutral-800',
       )}
     >
-      <Item href="/simple">Simple Gradients</Item>
+      <Item href="/linear">Linear Gradients</Item>
+      <Item href="/radial">Radial Gradients</Item>
       <Item href="/additive">Additive Gradients</Item>
     </aside>
   )

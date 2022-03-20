@@ -19,17 +19,20 @@ export default function Index() {
     const v2: SimpleGradientVariant = {
       type: 'simple-gradient',
       gradient: {
-        type: 'radial',
+        type: 'linear',
+        angle: 90,
         stops: [{ color: colors[2] }, { color: colors[3] }],
       },
     }
     const v3: SimpleGradientVariant = {
       type: 'simple-gradient',
       gradient: {
-        type: 'radial',
+        type: 'linear',
+        angle: 135,
         stops: [
           { color: colors[6], pos: 10 },
           { color: colors[7], pos: 20 },
+          { color: colors[8], pos: 80 },
         ],
       },
     }
@@ -37,7 +40,7 @@ export default function Index() {
       type: 'simple-gradient',
       gradient: {
         type: 'linear',
-        angle: 135,
+        angle: 225,
         stops: [{ color: colors[4] }, { color: colors[5] }],
       },
     }

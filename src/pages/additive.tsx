@@ -16,8 +16,6 @@ const Page: React.FC = () => {
           type: 'linear',
           angle: 336,
           stops: [
-            // { color: { type: "rgba", value: [0, 0, 255, 1] } },
-            // { color: { type: "rgba", value: [0, 0, 255, 0] } },
             { color: { type: 'rgba', value: [...colors[0].value, 1] } },
             { color: { type: 'rgba', value: [...colors[0].value, 0] } },
           ],
@@ -27,8 +25,6 @@ const Page: React.FC = () => {
           type: 'linear',
           angle: 217,
           stops: [
-            // { color: { type: "rgba", value: [255, 0, 0, 1] } },
-            // { color: { type: "rgba", value: [255, 0, 0, 0] } },
             { color: { type: 'rgba', value: [...colors[1].value, 1] } },
             { color: { type: 'rgba', value: [...colors[1].value, 0] } },
           ],
@@ -38,8 +34,6 @@ const Page: React.FC = () => {
           type: 'linear',
           angle: 127,
           stops: [
-            // { color: { type: "rgba", value: [0, 255, 0, 1] } },
-            // { color: { type: "rgba", value: [0, 255, 0, 0] } },
             { color: { type: 'rgba', value: [...colors[2].value, 1] } },
             { color: { type: 'rgba', value: [...colors[2].value, 0] } },
           ],
