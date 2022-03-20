@@ -8,7 +8,7 @@ import { SimpleGradientVariant } from 'src/types'
 export default function Index() {
   const { colors } = useAppState()
   const variants = useMemo(() => {
-    const variant1: SimpleGradientVariant = {
+    const v1: SimpleGradientVariant = {
       type: 'simple-gradient',
       gradient: {
         type: 'linear',
@@ -16,15 +16,24 @@ export default function Index() {
         stops: [{ color: colors[0] }, { color: colors[1] }],
       },
     }
-    const variant2: SimpleGradientVariant = {
+    const v2: SimpleGradientVariant = {
       type: 'simple-gradient',
       gradient: {
-        type: 'linear',
-        angle: 90,
+        type: 'radial',
         stops: [{ color: colors[2] }, { color: colors[3] }],
       },
     }
-    const variant3: SimpleGradientVariant = {
+    const v3: SimpleGradientVariant = {
+      type: 'simple-gradient',
+      gradient: {
+        type: 'radial',
+        stops: [
+          { color: colors[6], pos: 10 },
+          { color: colors[7], pos: 20 },
+        ],
+      },
+    }
+    const v4: SimpleGradientVariant = {
       type: 'simple-gradient',
       gradient: {
         type: 'linear',
@@ -32,16 +41,8 @@ export default function Index() {
         stops: [{ color: colors[4] }, { color: colors[5] }],
       },
     }
-    const variant4: SimpleGradientVariant = {
-      type: 'simple-gradient',
-      gradient: {
-        type: 'linear',
-        angle: 225,
-        stops: [{ color: colors[6] }, { color: colors[7] }],
-      },
-    }
 
-    return [variant1, variant2, variant3, variant4]
+    return [v1, v2, v3, v4]
   }, [colors])
 
   return (

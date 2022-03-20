@@ -9,7 +9,7 @@ const Page: React.FC = () => {
   const { colors } = useAppState()
 
   const variants = useMemo(() => {
-    const variant1: AdditiveGradientVariant = {
+    const v1: AdditiveGradientVariant = {
       type: 'additive-gradient',
       gradients: [
         {
@@ -48,7 +48,39 @@ const Page: React.FC = () => {
       ],
     }
 
-    return [variant1]
+    const v2: AdditiveGradientVariant = {
+      type: 'additive-gradient',
+      gradients: [
+        {
+          type: 'radial',
+          stops: [
+            { color: { type: 'rgba', value: [...colors[0].value, 1] } },
+            { color: { type: 'rgba', value: [...colors[0].value, 0] } },
+          ],
+          hint: 100,
+        },
+        {
+          type: 'linear',
+          angle: 217,
+          stops: [
+            { color: { type: 'rgba', value: [...colors[5].value, 1] } },
+            { color: { type: 'rgba', value: [...colors[5].value, 0] } },
+          ],
+          hint: 100,
+        },
+        {
+          type: 'linear',
+          angle: 127,
+          stops: [
+            { color: { type: 'rgba', value: [...colors[2].value, 1] } },
+            { color: { type: 'rgba', value: [...colors[2].value, 0] } },
+          ],
+          hint: 100,
+        },
+      ],
+    }
+
+    return [v1, v2]
   }, [colors])
 
   return (

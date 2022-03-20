@@ -13,14 +13,16 @@ export type LinearGradient = {
   type: "linear";
   /* Gradient angle in radians */
   angle: number;
-  stops: Array<{ color: Color }>;
+  stops: Array<{ color: Color; pos?: number }>;
   /* Color hint, as percentage */
   hint?: number;
 };
 
 export type RadialGradient = {
   type: "radial";
-  // TODO: Complete this
+  stops: Array<{ color: Color; pos?: number }>;
+  /* Color hint, as percentage */
+  hint?: number;
 };
 
 export type MeshGradient = {
@@ -28,7 +30,7 @@ export type MeshGradient = {
   // TODO: Complete this
 };
 
-export type Gradient = LinearGradient; //| RadialGradient | MeshGradient;
+export type Gradient = LinearGradient | RadialGradient | MeshGradient;
 
 /**
  * A variant that only renders a single gradient
