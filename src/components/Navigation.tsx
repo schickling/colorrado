@@ -16,6 +16,7 @@ export function Navigation() {
       <Item href="/linear">Linear Gradients</Item>
       <Item href="/radial">Radial Gradients</Item>
       <Item href="/additive">Additive Gradients</Item>
+      <Item href="/contrasts">Contrasts</Item>
     </aside>
   )
 }
