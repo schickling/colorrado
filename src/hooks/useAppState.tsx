@@ -72,7 +72,7 @@ export function AppStateProvider({ children }: ProviderProps) {
     const imageUrl = 'https://source.unsplash.com/600x600'
     imageFromImageUrl({ imageUrl }).then((imageB64) => {
       setImages((_) => [..._, imageB64])
-      setCurrentImageIndex((_) => _ + 1)
+      setCurrentImageIndex(0)
     })
   }, [images, setCurrentImageIndex, setImages])
 

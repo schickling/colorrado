@@ -83,19 +83,30 @@ const ImagesPreview = () => {
 }
 
 const ImagePreview: React.FC<{ image: string; imageIndex: number }> = ({ image, imageIndex }) => {
-  const { setCurrentImageIndex, currentImageIndex } = useAppState()
+  const { setCurrentImageIndex, currentImageIndex, setImages } = useAppState()
 
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      alt="Preview"
-      src={image}
-      className={cn(
-        'h-auto block w-auto object-scale-down max-h-40 rounded',
-        currentImageIndex === imageIndex ? 'opacity-100' : 'opacity-20',
-      )}
-      onClick={() => setCurrentImageIndex(imageIndex)}
-    />
+    <div className="relative group">
+      <div
+        onClick={() => {
+          setImages((images) => images.filter((_, i) => i !== imageIndex))
+          setCurrentImageIndex(Math.max(currentImageIndex - 1, 0))
+        }}
+        className="absolute top-1 right-1 group-hover:opacity-100 opacity-0 cursor-pointer bg-neutral-900/80 p-2 rounded-full"
+      >
+        x
+      </div>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        alt="Preview"
+        src={image}
+        className={cn(
+          'h-auto block w-auto object-scale-down max-h-40 rounded',
+          currentImageIndex === imageIndex ? 'opacity-100' : 'opacity-20',
+        )}
+        onClick={() => setCurrentImageIndex(imageIndex)}
+      />
+    </div>
   )
 }
 

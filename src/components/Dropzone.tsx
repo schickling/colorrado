@@ -7,7 +7,7 @@ type Props = PropsWithChildren<{}>
 
 export function Dropzone({ children }: Props) {
   const [isDropping, setIsDropping] = useState(false)
-  const { setImages, setCurrentImageIndex } = useAppState()
+  const { setImages, images, setCurrentImageIndex } = useAppState()
 
   return (
     <section
@@ -32,7 +32,7 @@ export function Dropzone({ children }: Props) {
           .forEach((f) => {
             imageFromBlob({ blob: f }).then((imageB64) => {
               setImages((_) => [..._, imageB64])
-              setCurrentImageIndex((_) => _ + 1)
+              setCurrentImageIndex(images.length)
             })
           })
       }}
