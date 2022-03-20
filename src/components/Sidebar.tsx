@@ -7,6 +7,8 @@ import React from 'react'
 import * as HoverCard from '@radix-ui/react-hover-card'
 
 export const Sidebar: React.FC = () => {
+  const { colors } = useAppState()
+
   return (
     <aside
       className={cn(
@@ -17,8 +19,12 @@ export const Sidebar: React.FC = () => {
       )}
     >
       <AnimateCheckbox />
-      <ImagePreview />
-      {/* <ColorPickers /> */}
+      <ImagesPreview />
+      <div className="flex gap-2 flex-wrap">
+        {colors.map((c, i) => (
+          <PreviewColor key={i} color={c} colorIndex={i} />
+        ))}
+      </div>
     </aside>
   )
 }
@@ -59,24 +65,37 @@ const AnimateCheckbox: React.FC = () => {
   )
 }
 
-const ImagePreview: React.FC = () => {
-  const { image, colors } = useAppState()
+const ImagesPreview = () => {
+  const { images } = useAppState()
 
-  if (!image) return null
+  if (images.length === 0) return null
 
   return (
     <section className={cn('space-y-4 pb-4 border-b border-neutral-800')}>
       <span className="text-sm text-neutral-50">Original Image</span>
-
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img alt="Preview" src={image} className="h-auto block w-auto object-scale-down max-h-40 rounded" />
-
-      <div className="flex gap-2 flex-wrap">
-        {colors.map((c, i) => (
-          <PreviewColor key={i} color={c} colorIndex={i} />
+      <div className="flex flex-wrap gap-2">
+        {images.map((image, imageIndex) => (
+          <ImagePreview key={imageIndex} image={image} imageIndex={imageIndex} />
         ))}
       </div>
     </section>
+  )
+}
+
+const ImagePreview: React.FC<{ image: string; imageIndex: number }> = ({ image, imageIndex }) => {
+  const { setCurrentImageIndex, currentImageIndex } = useAppState()
+
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      alt="Preview"
+      src={image}
+      className={cn(
+        'h-auto block w-auto object-scale-down max-h-40 rounded',
+        currentImageIndex === imageIndex ? 'opacity-100' : 'opacity-20',
+      )}
+      onClick={() => setCurrentImageIndex(imageIndex)}
+    />
   )
 }
 
@@ -88,7 +107,7 @@ const PreviewColor: React.FC<{ color: RGBColor; colorIndex: number }> = ({ color
           <div className="w-8 h-8 rounded-full shrink-0" style={{ backgroundColor: rgb(color) }}></div>
         </HoverCard.Trigger>
         <HoverCard.Content align="center" sideOffset={5}>
-          <HoverCard.Arrow className="text-neutral-100" fill="currentColor" />
+          <HoverCard.Arrow offset={10} className="text-neutral-100" fill="currentColor" />
           <ColorPicker {...{ color, colorIndex }} />
         </HoverCard.Content>
       </HoverCard.Root>

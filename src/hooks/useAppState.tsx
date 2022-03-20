@@ -1,56 +1,102 @@
-import { createContext, Dispatch, PropsWithChildren, SetStateAction, useContext, useEffect, useState } from 'react'
-import { ImageDataURI, RGBColor } from 'src/types'
-import { setImageAndColorsFromImageUrl } from '~/components/Dropzone'
+import ColorThief from 'colorthief'
+import image from 'next/image'
+import { createContext, useContext, useEffect, useState } from 'react'
+import { ImageB64String, RGBColor } from 'src/types'
+import { addImageFromImageUrl } from '~/components/Dropzone'
+import { usePersistedState } from './usePersistedState'
 
-type AppState = {
+export type AppState = {
   animate: boolean
-  setAnimate: Dispatch<SetStateAction<boolean>>
+  setAnimate: React.Dispatch<React.SetStateAction<boolean>>
   animateSpeedMultiplier: number
-  setAnimateSpeedMultiplier: Dispatch<SetStateAction<number>>
-  image: ImageDataURI | null
-  setImage: Dispatch<SetStateAction<ImageDataURI | null>>
+  setAnimateSpeedMultiplier: React.Dispatch<React.SetStateAction<number>>
+
+  images: ImageB64String[]
+  setImages: SetImages
+  currentImageIndex: number
+  setCurrentImageIndex: React.Dispatch<React.SetStateAction<number>>
+
   colors: RGBColor[]
-  setColors: Dispatch<SetStateAction<RGBColor[]>>
+  setColors: SetColors
 }
+
+export type SetImages = React.Dispatch<React.SetStateAction<ImageB64String[]>>
+export type SetColors = React.Dispatch<React.SetStateAction<RGBColor[]>>
 
 const DEFAULT_STATE: AppState = {
   animate: true,
   setAnimate: () => {},
   animateSpeedMultiplier: 1,
   setAnimateSpeedMultiplier: () => {},
-  image: null,
-  setImage: () => {},
+  images: [],
+  setImages: () => {},
+  currentImageIndex: 0,
+  setCurrentImageIndex: () => {},
   colors: [
-    { type: 'rgb', value: [178, 77, 80] },
-    { type: 'rgb', value: [35, 74, 143] },
-    { type: 'rgb', value: [63, 182, 153] },
-    { type: 'rgb', value: [41, 39, 55] },
-    { type: 'rgb', value: [152, 147, 85] },
-    { type: 'rgb', value: [178, 77, 80] },
-    { type: 'rgb', value: [35, 74, 143] },
-    { type: 'rgb', value: [63, 182, 153] },
-    { type: 'rgb', value: [41, 39, 55] },
-    { type: 'rgb', value: [152, 147, 85] },
+    { type: 'rgb', value: [0, 0, 0] },
+    { type: 'rgb', value: [0, 0, 0] },
+    { type: 'rgb', value: [0, 0, 0] },
+    { type: 'rgb', value: [0, 0, 0] },
+    { type: 'rgb', value: [0, 0, 0] },
+    { type: 'rgb', value: [0, 0, 0] },
+    { type: 'rgb', value: [0, 0, 0] },
+    { type: 'rgb', value: [0, 0, 0] },
+    { type: 'rgb', value: [0, 0, 0] },
+    { type: 'rgb', value: [0, 0, 0] },
   ],
   setColors: () => {},
 }
 
 const Context = createContext<AppState>(DEFAULT_STATE)
 
-type ProviderProps = PropsWithChildren<{}>
+const colorCache = new Map<ImageB64String, RGBColor[]>()
+
+type ProviderProps = React.PropsWithChildren<{}>
 export function AppStateProvider({ children }: ProviderProps) {
-  const [animate, setAnimate] = useState(DEFAULT_STATE.animate)
-  const [animateSpeedMultiplier, setAnimateSpeedMultiplier] = useState(DEFAULT_STATE.animateSpeedMultiplier)
+  const [animate, setAnimate] = usePersistedState(DEFAULT_STATE.animate, 'animate')
+  const [animateSpeedMultiplier, setAnimateSpeedMultiplier] = usePersistedState(
+    DEFAULT_STATE.animateSpeedMultiplier,
+    'animateSpeedMultiplier',
+  )
   const [colors, setColors] = useState(DEFAULT_STATE.colors)
-  const [image, setImage] = useState(DEFAULT_STATE.image)
+  const [images, setImages] = usePersistedState(DEFAULT_STATE.images, 'images')
+  const [currentImageIndex, setCurrentImageIndex] = usePersistedState(
+    DEFAULT_STATE.currentImageIndex,
+    'currentImageIndex',
+  )
 
   useEffect(() => {
-    // don't run in SSR
-    if (typeof window === 'undefined') return
+    // just run the first time
+    if (images.length > 0) return
 
     const imageUrl = 'https://source.unsplash.com/600x600'
-    setImageAndColorsFromImageUrl({ setColors, setImage, imageUrl })
-  }, [])
+    addImageFromImageUrl({ setImages, imageUrl })
+  }, [images, setColors, setImages])
+
+  useEffect(() => {
+    const imageUrl = images[currentImageIndex]
+
+    if (imageUrl === undefined) return
+
+    if (colorCache.has(imageUrl)) {
+      setColors(colorCache.get(imageUrl)!)
+      return
+    }
+
+    const img = document.createElement('img')
+    img.src = imageUrl
+    img.addEventListener('load', () => {
+      const ct = new ColorThief()
+      const palette = ct.getPalette(img)
+      const colors = palette.map<RGBColor>((color) => ({ type: 'rgb', value: color }))
+
+      setColors(colors)
+
+      colorCache.set(imageUrl, colors)
+
+      img.remove()
+    })
+  }, [images, currentImageIndex, setColors])
 
   return (
     <Context.Provider
@@ -59,8 +105,10 @@ export function AppStateProvider({ children }: ProviderProps) {
         setAnimate,
         animateSpeedMultiplier,
         setAnimateSpeedMultiplier,
-        image,
-        setImage,
+        images,
+        setImages,
+        currentImageIndex,
+        setCurrentImageIndex,
         colors,
         setColors,
       }}

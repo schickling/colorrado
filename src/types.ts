@@ -1,4 +1,4 @@
-export type ImageDataURI = string
+export type ImageB64String = string
 
 export type RGBColor = { type: 'rgb'; value: [number, number, number] }
 export type RGBAColor = {

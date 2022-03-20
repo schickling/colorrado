@@ -1,14 +1,13 @@
 import { PropsWithChildren, useState } from 'react'
 import cn from 'classnames'
-import ColorThief from 'colorthief'
-import { useAppState } from 'src/hooks/useAppState'
-import { RGBColor } from '~/types'
+import { SetImages, useAppState } from 'src/hooks/useAppState'
+import { ImageB64String } from '~/types'
 
 type Props = PropsWithChildren<{}>
 
 export function Dropzone({ children }: Props) {
   const [isDropping, setIsDropping] = useState(false)
-  const { setImage, setColors } = useAppState()
+  const { setImages } = useAppState()
 
   return (
     <section
@@ -30,9 +29,7 @@ export function Dropzone({ children }: Props) {
         Array.from(e.dataTransfer.files)
           .filter((f) => f.type.startsWith('image/'))
           .slice(0, 1)
-          .forEach((f) => {
-            setImageAndColorsFromBlob({ setColors, setImage, blob: f })
-          })
+          .forEach((f) => addImageFromBlob({ setImages, blob: f }))
       }}
     >
       {children}
@@ -48,42 +45,20 @@ const blobToBase64 = (blob: Blob): Promise<string> => {
   })
 }
 
-const setImageAndColorsFromBlob = ({
-  blob,
-  setImage,
-  setColors,
+export const addImageFromB64String = ({
+  b64String,
+  setImages,
 }: {
-  blob: Blob
-  setImage: React.Dispatch<React.SetStateAction<string | null>>
-  setColors: React.Dispatch<React.SetStateAction<RGBColor[]>>
+  b64String: ImageB64String
+  setImages: SetImages
 }) => {
-  const imageUrl = URL.createObjectURL(blob)
-
-  setImage(imageUrl)
-
-  const img = document.createElement('img')
-  img.src = imageUrl
-  img.addEventListener('load', () => {
-    const ct = new ColorThief()
-    const palette = ct.getPalette(img)
-    setColors(palette.map((color) => ({ type: 'rgb', value: color })))
-
-    img.remove()
-  })
+  setImages((_) => [..._, b64String])
 }
 
-export const setImageAndColorsFromImageUrl = ({
-  imageUrl,
-  setImage,
-  setColors,
-}: {
-  imageUrl: string
-  setImage: React.Dispatch<React.SetStateAction<string | null>>
-  setColors: React.Dispatch<React.SetStateAction<RGBColor[]>>
-}) => {
+export const addImageFromBlob = ({ blob, setImages }: { blob: Blob; setImages: SetImages }) =>
+  blobToBase64(blob).then((b64String) => addImageFromB64String({ b64String, setImages }))
+
+export const addImageFromImageUrl = ({ imageUrl, setImages }: { imageUrl: string; setImages: SetImages }) =>
   fetch(imageUrl)
     .then((res) => res.blob())
-    .then((blob) => {
-      setImageAndColorsFromBlob({ blob, setImage, setColors })
-    })
-}
+    .then((blob) => addImageFromBlob({ blob, setImages }))
