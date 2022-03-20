@@ -1,30 +1,20 @@
 import { Color } from '~/types'
 
 export function relativeLuminance(color: Color): number {
-  let r: number
-  let g: number
-  let b: number
-
   if (color.type === 'rgb') {
-    r = color.value[0] / 255
-    g = color.value[1] / 255
-    b = color.value[2] / 255
+    const gammaCorrectedColor = color.value.map(function (c) {
+      c /= 255
+      return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)
+    })
+    return gammaCorrectedColor[0] * 0.2126 + gammaCorrectedColor[1] * 0.7152 + gammaCorrectedColor[2] * 0.0722
   } else {
     throw new Error('relativeLuminance: Not implemeted')
   }
-
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b
 }
 
 export function contrastRatio(c1: Color, c2: Color) {
   let l1 = relativeLuminance(c1)
   let l2 = relativeLuminance(c2)
 
-  if (l1 < l2) {
-    let temp = l1
-    l1 = l2
-    l2 = temp
-  }
-
-  return ((l1 + 0.05) / (l2 + 0.05)).toPrecision(2)
+  return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05)
 }
