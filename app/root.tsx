@@ -8,7 +8,10 @@ import {
   ScrollRestoration,
 } from "remix";
 import type { MetaFunction } from "remix";
+import cn from "classnames";
+import { Sidebar } from "~/components/Sidebar";
 import styles from "./styles.css";
+import { AppStateProvider } from "./hooks/useAppState";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -32,8 +35,19 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
-        <Outlet />
+      <body
+        className={cn(
+          "flex h-screen w-screen overflow-hidden",
+          "bg-neutral-900 text-neutral-50"
+        )}
+      >
+        <AppStateProvider>
+          <main className="flex-1 flex">
+            <Outlet />
+          </main>
+
+          <Sidebar />
+        </AppStateProvider>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
