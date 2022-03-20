@@ -1,3 +1,4 @@
+import React from 'react'
 import { useAppState } from '~/hooks/useAppState'
 import { Color } from '~/types'
 import { rgb } from '~/utils/color'
@@ -11,11 +12,11 @@ const Page: React.FC = () => {
       <div className="text-sm font-bold uppercase text-neutral-400">Against black</div>
       <div className="text-sm font-bold uppercase text-neutral-400">Against white</div>
 
-      {colors.map((c) => (
-        <>
+      {colors.map((c, i) => (
+        <React.Fragment key={i}>
           <Contrast against={c} color={{ type: 'rgb', value: [0, 0, 0] }} />
           <Contrast against={c} color={{ type: 'rgb', value: [255, 255, 255] }} />
-        </>
+        </React.Fragment>
       ))}
     </section>
   )
