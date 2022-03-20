@@ -1,7 +1,7 @@
 import cn from 'classnames'
 import { RgbColorPicker } from 'react-colorful'
-import { useAppState } from '~/hooks/useAppState'
-import { rgb } from '~/utils/color'
+import { useAppState } from 'src/hooks/useAppState'
+import { rgb } from 'src/utils/color'
 
 export function Sidebar() {
   return (
@@ -29,6 +29,7 @@ function ImagePreview() {
       <span className="text-sm text-neutral-50">Original Image</span>
 
       <div className="max-h-40">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img alt="Preview" src={image} className="max-h-full rounded" />
       </div>
 

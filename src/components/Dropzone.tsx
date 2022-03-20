@@ -1,7 +1,7 @@
 import { PropsWithChildren, useState } from 'react'
 import cn from 'classnames'
 import ColorThief from 'colorthief'
-import { useAppState } from '~/hooks/useAppState'
+import { useAppState } from 'src/hooks/useAppState'
 
 type Props = PropsWithChildren<{}>
 
