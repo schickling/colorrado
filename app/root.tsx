@@ -10,6 +10,7 @@ import {
 import type { MetaFunction } from "remix";
 import cn from "classnames";
 import { Sidebar } from "~/components/Sidebar";
+import { Navigation } from "~/components/Navigation";
 import styles from "./styles.css";
 import { AppStateProvider } from "./hooks/useAppState";
 
@@ -42,6 +43,8 @@ export default function App() {
         )}
       >
         <AppStateProvider>
+          <Navigation />
+
           <main className="flex-1 flex">
             <Outlet />
           </main>

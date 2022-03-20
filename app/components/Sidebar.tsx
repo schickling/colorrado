@@ -31,7 +31,7 @@ function ImagePreview() {
         "pb-4 border-b border-neutral-800"
       )}
     >
-      <span className="font-bold text-sm text-neutral-50">Original Image</span>
+      <span className="text-sm text-neutral-50">Original Image</span>
 
       <img
         alt="Preview"
@@ -58,7 +58,7 @@ function ColorPickers() {
 
   return (
     <section className="flex flex-col space-y-4">
-      <span className="font-bold text-sm text-neutral-50">Derived Colors</span>
+      <span className="text-sm text-neutral-50">Derived Colors</span>
 
       {colors.map((c, idx) => (
         <RgbColorPicker
