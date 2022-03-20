@@ -26,10 +26,7 @@ export default function Index() {
       type: 'simple-gradient',
       gradient: {
         type: 'radial',
-        stops: [
-          { color: colors[6], pos: 10 },
-          { color: colors[7], pos: 20 },
-        ],
+        stops: [{ color: colors[6] }, { color: colors[7] }],
       },
     }
     const v4: SimpleGradientVariant = {
