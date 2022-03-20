@@ -8,6 +8,8 @@
     "build": "next build"
   },
   "dependencies": {
+    "@radix-ui/react-hover-card": "^0.1.5",
+    "@radix-ui/react-tooltip": "^0.1.7",
     "classnames": "2.3.1",
     "color.js": "1.2.0",
     "colorthief": "2.3.2",
