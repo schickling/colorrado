@@ -1,3 +1,5 @@
+export type ImageDataURI = string;
+
 export type RGBColor = { type: "rgb"; value: [number, number, number] };
 export type HSLColor = { type: "hsl"; value: [number, number, number] };
 
@@ -14,18 +16,37 @@ export type LinearGradient = {
 
 export type RadialGradient = {
   type: "radial";
+  // TODO: Complete this
 };
 
-export type MeshGradient1 = {
-  type: "mesh1";
+export type MeshGradient = {
+  type: "mesh";
+  // TODO: Complete this
 };
 
-export type MeshGradient2 = {
-  type: "mesh2";
+export type Gradient = LinearGradient; //| RadialGradient | MeshGradient;
+
+/**
+ * A variant that only renders a single gradient
+ */
+export type SimpleGradientVariant = {
+  type: "simple-gradient";
+  gradient: Gradient;
 };
 
-export type Gradient = LinearGradient; //| RadialGradient | MeshGradient1 | MeshGradient2;
-
-export type Variant = {
-  gradients: Array<Gradient>;
+/**
+ * A variant that adds up a set of variants
+ */
+export type AdditiveGradientVariant = {
+  type: "additive-gradient";
+  gradients: Gradient[];
 };
+
+export type PerlinNoiseVariant = {
+  type: "perlin-noise";
+};
+
+export type Variant =
+  | SimpleGradientVariant
+  | AdditiveGradientVariant
+  | PerlinNoiseVariant;

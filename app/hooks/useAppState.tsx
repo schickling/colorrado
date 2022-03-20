@@ -6,23 +6,29 @@ import {
   useContext,
   useState,
 } from "react";
-import { Color, Gradient, Variant } from "~/types";
+import { Color, ImageDataURI } from "~/types";
 
 type AppState = {
+  image: ImageDataURI | null;
+  setImage: Dispatch<SetStateAction<ImageDataURI | null>>;
   colors: Color[];
   setColors: Dispatch<SetStateAction<Color[]>>;
 };
 
 const DEFAULT_STATE: AppState = {
+  image: null,
+  setImage: () => {},
   colors: [
-    {
-      type: "rgb",
-      value: [178, 77, 80],
-    },
-    {
-      type: "rgb",
-      value: [35, 74, 143],
-    },
+    { type: "rgb", value: [178, 77, 80] },
+    { type: "rgb", value: [35, 74, 143] },
+    { type: "rgb", value: [63, 182, 153] },
+    { type: "rgb", value: [41, 39, 55] },
+    { type: "rgb", value: [152, 147, 85] },
+    { type: "rgb", value: [178, 77, 80] },
+    { type: "rgb", value: [35, 74, 143] },
+    { type: "rgb", value: [63, 182, 153] },
+    { type: "rgb", value: [41, 39, 55] },
+    { type: "rgb", value: [152, 147, 85] },
   ],
   setColors: () => {},
 };
@@ -30,13 +36,15 @@ const DEFAULT_STATE: AppState = {
 const Context = createContext<AppState>(DEFAULT_STATE);
 
 type ProviderProps = PropsWithChildren<{}>;
-
 export function AppStateProvider({ children }: ProviderProps) {
   const [colors, setColors] = useState(DEFAULT_STATE.colors);
+  const [image, setImage] = useState(DEFAULT_STATE.image);
 
   return (
     <Context.Provider
       value={{
+        image,
+        setImage,
         colors,
         setColors,
       }}
@@ -47,41 +55,17 @@ export function AppStateProvider({ children }: ProviderProps) {
 }
 
 export function useAppState() {
-  const { colors, setColors } = useContext(Context);
+  const { image, setImage, colors, setColors } = useContext(Context);
 
   const setColor = (idx: number, color: Color) => {
     setColors(colors.map((c, i) => (i === idx ? color : c)));
   };
 
-  const gradients: Gradient[] = [
-    {
-      type: "linear",
-      angle: 45,
-      stops: [{ color: colors[0] }, { color: colors[1] }],
-    },
-    {
-      type: "linear",
-      angle: 90,
-      stops: [{ color: colors[0] }, { color: colors[1] }],
-    },
-    {
-      type: "linear",
-      angle: 135,
-      stops: [{ color: colors[0] }, { color: colors[1] }],
-    },
-    {
-      type: "linear",
-      angle: 225,
-      stops: [{ color: colors[0] }, { color: colors[1] }],
-    },
-  ];
-
-  const variants: Variant[] = [];
-
   return {
+    image,
+    setImage,
     colors,
     setColor,
-    gradients,
-    variants,
+    setColors,
   };
 }

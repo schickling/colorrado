@@ -7,7 +7,7 @@ type Props = PropsWithChildren<{}>;
 
 export function Dropzone({ children }: Props) {
   const [isDropping, setIsDropping] = useState(false);
-  const { setColor } = useAppState();
+  const { setImage, setColors } = useAppState();
 
   return (
     <section
@@ -33,11 +33,18 @@ export function Dropzone({ children }: Props) {
             const reader = new FileReader();
             reader.addEventListener("load", (e) => {
               const img = document.createElement("img");
-              img.src = e.target?.result as string;
+              const dataUri = e.target?.result as string;
+              img.src = dataUri;
+              setImage(dataUri);
+
               const ct = new ColorThief();
               const palette = ct.getPalette(img);
-              console.log(palette);
-              // setColor(0, { type: "rgb", value: x });
+              setColors(
+                palette.map((color) => ({
+                  type: "rgb",
+                  value: color,
+                }))
+              );
 
               img.remove();
             });
