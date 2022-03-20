@@ -1,5 +1,6 @@
-import { createContext, Dispatch, PropsWithChildren, SetStateAction, useContext, useState } from 'react'
+import { createContext, Dispatch, PropsWithChildren, SetStateAction, useContext, useEffect, useState } from 'react'
 import { ImageDataURI, RGBColor } from 'src/types'
+import { setImageAndColorsFromImageUrl } from '~/components/Dropzone'
 
 type AppState = {
   animate: boolean
@@ -37,6 +38,14 @@ export function AppStateProvider({ children }: ProviderProps) {
   const [animate, setAnimate] = useState(DEFAULT_STATE.animate)
   const [colors, setColors] = useState(DEFAULT_STATE.colors)
   const [image, setImage] = useState(DEFAULT_STATE.image)
+
+  useEffect(() => {
+    // don't run in SSR
+    if (typeof window === 'undefined') return
+
+    const imageUrl = 'https://source.unsplash.com/600x600'
+    setImageAndColorsFromImageUrl({ setColors, setImage, imageUrl })
+  }, [])
 
   return (
     <Context.Provider

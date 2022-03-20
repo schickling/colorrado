@@ -2,6 +2,7 @@ import { PropsWithChildren, useState } from 'react'
 import cn from 'classnames'
 import ColorThief from 'colorthief'
 import { useAppState } from 'src/hooks/useAppState'
+import { RGBColor } from '~/types'
 
 type Props = PropsWithChildren<{}>
 
@@ -30,19 +31,7 @@ export function Dropzone({ children }: Props) {
           .filter((f) => f.type.startsWith('image/'))
           .slice(0, 1)
           .forEach((f) => {
-            const imageUrl = URL.createObjectURL(f)
-
-            setImage(imageUrl)
-
-            const img = document.createElement('img')
-            img.src = imageUrl
-            img.addEventListener('load', () => {
-              const ct = new ColorThief()
-              const palette = ct.getPalette(img)
-              setColors(palette.map((color) => ({ type: 'rgb', value: color })))
-
-              img.remove()
-            })
+            setImageAndColorsFromBlob({ setColors, setImage, blob: f })
           })
       }}
     >
@@ -57,4 +46,44 @@ const blobToBase64 = (blob: Blob): Promise<string> => {
   return new Promise<string>((resolve) => {
     reader.onloadend = () => resolve(reader.result as string)
   })
+}
+
+const setImageAndColorsFromBlob = ({
+  blob,
+  setImage,
+  setColors,
+}: {
+  blob: Blob
+  setImage: React.Dispatch<React.SetStateAction<string | null>>
+  setColors: React.Dispatch<React.SetStateAction<RGBColor[]>>
+}) => {
+  const imageUrl = URL.createObjectURL(blob)
+
+  setImage(imageUrl)
+
+  const img = document.createElement('img')
+  img.src = imageUrl
+  img.addEventListener('load', () => {
+    const ct = new ColorThief()
+    const palette = ct.getPalette(img)
+    setColors(palette.map((color) => ({ type: 'rgb', value: color })))
+
+    img.remove()
+  })
+}
+
+export const setImageAndColorsFromImageUrl = ({
+  imageUrl,
+  setImage,
+  setColors,
+}: {
+  imageUrl: string
+  setImage: React.Dispatch<React.SetStateAction<string | null>>
+  setColors: React.Dispatch<React.SetStateAction<RGBColor[]>>
+}) => {
+  fetch(imageUrl)
+    .then((res) => res.blob())
+    .then((blob) => {
+      setImageAndColorsFromBlob({ blob, setImage, setColors })
+    })
 }
