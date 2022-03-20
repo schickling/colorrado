@@ -32,7 +32,7 @@ export function Navigation() {
         <Item href="/additive">Additive Gradients</Item>
       </aside>
       <div className="text-xs p-4 text-neutral-600 leading-5">
-        Made with 🍬 <br />
+        Made with <span className="hover:animate-spin inline-block">🍬</span> <br />
         by <TwitterLink handle="unsafecreds" color="pink" /> and <TwitterLink handle="schickling" color="yellow" />
       </div>
     </div>
