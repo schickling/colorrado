@@ -1,9 +1,9 @@
 import cn from "classnames";
-import { PropsWithChildren, useMemo } from "react";
+import { useMemo } from "react";
 import { useAppState } from "~/hooks/useAppState";
-import { cssGradient } from "~/utils/gradient";
-import { AdditiveGradientVariant, Variant } from "~/types";
+import { AdditiveGradientVariant } from "~/types";
 import { Dropzone } from "~/components/Dropzone";
+import { Variant } from "~/components/Variant";
 
 export default function Index() {
   const { colors } = useAppState();
@@ -13,18 +13,30 @@ export default function Index() {
       gradients: [
         {
           type: "linear",
-          angle: 45,
-          stops: [{ color: colors[0] }, { color: colors[1] }],
+          angle: 217,
+          stops: [
+            { color: { type: "rgba", value: [255, 0, 0, 1] } },
+            { color: { type: "rgba", value: [255, 0, 0, 0] } },
+          ],
+          hint: 100,
         },
         {
           type: "linear",
-          angle: 90,
-          stops: [{ color: colors[0] }, { color: colors[1] }],
+          angle: 127,
+          stops: [
+            { color: { type: "rgba", value: [0, 255, 0, 1] } },
+            { color: { type: "rgba", value: [0, 255, 0, 0] } },
+          ],
+          hint: 100,
         },
         {
           type: "linear",
-          angle: 135,
-          stops: [{ color: colors[0] }, { color: colors[1] }],
+          angle: 336,
+          stops: [
+            { color: { type: "rgba", value: [0, 0, 255, 1] } },
+            { color: { type: "rgba", value: [0, 0, 255, 0] } },
+          ],
+          hint: 100,
         },
       ],
     };
@@ -41,24 +53,4 @@ export default function Index() {
       </div>
     </Dropzone>
   );
-}
-
-type VariantProps = PropsWithChildren<{
-  variant: Variant;
-}>;
-
-function Variant({ children, variant }: VariantProps) {
-  if (variant.type === "simple-gradient") {
-    return (
-      <div
-        style={{
-          background: cssGradient(variant.gradient),
-        }}
-      >
-        {children}
-      </div>
-    );
-  }
-
-  return <div>Not implemented</div>;
 }

@@ -1,7 +1,7 @@
 import cn from "classnames";
 import { RgbColorPicker } from "react-colorful";
 import { useAppState } from "~/hooks/useAppState";
-import { hex } from "~/utils/color";
+import { rgb } from "~/utils/color";
 
 export function Sidebar() {
   return (
@@ -44,7 +44,7 @@ function ImagePreview() {
           <div
             className="w-8 h-8 rounded-full"
             style={{
-              backgroundColor: hex(c),
+              backgroundColor: rgb(c),
             }}
           ></div>
         ))}

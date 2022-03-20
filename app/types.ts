@@ -1,9 +1,13 @@
 export type ImageDataURI = string;
 
 export type RGBColor = { type: "rgb"; value: [number, number, number] };
+export type RGBAColor = {
+  type: "rgba";
+  value: [number, number, number, number];
+};
 export type HSLColor = { type: "hsl"; value: [number, number, number] };
 
-export type Color = RGBColor; // | HSLColor;
+export type Color = RGBColor | RGBAColor | HSLColor;
 
 export type LinearGradient = {
   type: "linear";

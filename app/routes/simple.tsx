@@ -1,9 +1,8 @@
 import cn from "classnames";
-import { PropsWithChildren, useMemo } from "react";
+import { useMemo } from "react";
 import { useAppState } from "~/hooks/useAppState";
-import { cssGradient } from "~/utils/gradient";
-import { Variant } from "~/types";
 import { Dropzone } from "~/components/Dropzone";
+import { Variant } from "~/components/Variant";
 import { SimpleGradientVariant } from "~/types";
 
 export default function Index() {
@@ -54,24 +53,4 @@ export default function Index() {
       </div>
     </Dropzone>
   );
-}
-
-type VariantProps = PropsWithChildren<{
-  variant: Variant;
-}>;
-
-function Variant({ children, variant }: VariantProps) {
-  if (variant.type === "simple-gradient") {
-    return (
-      <div
-        style={{
-          background: cssGradient(variant.gradient),
-        }}
-      >
-        {children}
-      </div>
-    );
-  }
-
-  return <div>Not implemented</div>;
 }
