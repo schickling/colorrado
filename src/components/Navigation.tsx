@@ -3,6 +3,7 @@ import { PropsWithChildren } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Image from 'next/image'
+import * as Icons from './Icons'
 
 export function Navigation() {
   return (
@@ -32,6 +33,14 @@ export function Navigation() {
         <Item href="/additive">Additive Gradients</Item>
       </aside>
       <div className="text-xs p-4 text-neutral-600 leading-5">
+        <a
+          href="https://github.com/schickling/colorrado"
+          target="_blank"
+          className="mb-3 block text-neutral-400 hover:text-neutral-100"
+          rel="noreferrer"
+        >
+          <Icons.GitHub className="w-4 h-4" />
+        </a>
         Made with <span className="hover:animate-spin inline-block">🍬</span> <br />
         by <TwitterLink handle="unsafecreds" color="pink" /> and <TwitterLink handle="schickling" color="yellow" />
       </div>
