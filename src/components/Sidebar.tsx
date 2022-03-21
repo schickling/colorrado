@@ -4,7 +4,9 @@ import { useAppState } from 'src/hooks/useAppState'
 import { hex, hexToRgb, rgb } from 'src/utils/color'
 import { RGBColor } from '~/types'
 import React from 'react'
+import * as Heroicons from '@heroicons/react/solid'
 import * as HoverCard from '@radix-ui/react-hover-card'
+import { imageFromImageUrl } from '~/utils/image'
 
 export const Sidebar: React.FC = () => {
   const { colors } = useAppState()
@@ -66,7 +68,7 @@ const AnimateCheckbox: React.FC = () => {
 }
 
 const ImagesPreview = () => {
-  const { images } = useAppState()
+  const { images, setImages, setCurrentImageIndex } = useAppState()
 
   if (images.length === 0) return null
 
@@ -77,6 +79,18 @@ const ImagesPreview = () => {
         {images.map((image, imageIndex) => (
           <ImagePreview key={imageIndex} image={image} imageIndex={imageIndex} />
         ))}
+        <div>
+          <Heroicons.PlusCircleIcon
+            onClick={() => {
+              const imageUrl = 'https://source.unsplash.com/600x600'
+              imageFromImageUrl({ imageUrl }).then((imageB64) => {
+                setImages((_) => [..._, imageB64])
+                setCurrentImageIndex(images.length)
+              })
+            }}
+            className="w-10 h-10 opacity-30 hover:opacity-100 cursor-pointer"
+          />
+        </div>
       </div>
     </section>
   )
@@ -87,14 +101,24 @@ const ImagePreview: React.FC<{ image: string; imageIndex: number }> = ({ image, 
 
   return (
     <div className="relative group">
-      <div
-        onClick={() => {
-          setImages((images) => images.filter((_, i) => i !== imageIndex))
-          setCurrentImageIndex(Math.max(currentImageIndex - 1, 0))
-        }}
-        className="absolute top-1 right-1 group-hover:opacity-100 opacity-0 cursor-pointer bg-neutral-900/80 p-2 rounded-full"
-      >
-        x
+      <div className="absolute top-2 right-2 flex gap-1">
+        <Heroicons.RefreshIcon
+          onClick={() => {
+            const imageUrl = 'https://source.unsplash.com/600x600'
+            imageFromImageUrl({ imageUrl }).then((imageB64) => {
+              setImages((_) => _.map((_, i) => (i === imageIndex ? imageB64 : _)))
+              setCurrentImageIndex(imageIndex)
+            })
+          }}
+          className="text-gray-100 p-1.5 w-6 h-6 group-hover:opacity-70 hover:!opacity-100 opacity-0 cursor-pointer bg-neutral-900/80 rounded-full"
+        />
+        <Heroicons.XIcon
+          onClick={() => {
+            setImages((images) => images.filter((_, i) => i !== imageIndex))
+            setCurrentImageIndex(Math.max(currentImageIndex - 1, 0))
+          }}
+          className="text-gray-100 p-1.5 w-6 h-6 group-hover:opacity-70 hover:!opacity-100 opacity-0 cursor-pointer bg-neutral-900/80 rounded-full"
+        />
       </div>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img

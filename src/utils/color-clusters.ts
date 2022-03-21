@@ -33,8 +33,6 @@ export const getMostSimilarColors = (colors: RGBColor[], clusterSize: number, re
 
   let growingTable: GrowingTable = distanceTable.map(([c1, c2, d]) => [d, [c1, c2]])
 
-  // TODO filter out duplicates [1, 2] === [2, 1]
-
   for (let k = 2; k < clusterSize; k++) {
     const newGrowingTable: GrowingTable = []
 
@@ -52,8 +50,6 @@ export const getMostSimilarColors = (colors: RGBColor[], clusterSize: number, re
             return [previousDistance + additionalDistance, [...previousColorIndexes, nextColorIndex]]
           }),
       )
-
-      // TODO filter out duplicates [1, 2] === [2, 1]
     }
 
     // console.log('newGrowingTable')
@@ -62,6 +58,10 @@ export const getMostSimilarColors = (colors: RGBColor[], clusterSize: number, re
 
     growingTable = newGrowingTable
   }
+
+  // TODO filter out duplicates [1, 2] === [2, 1]
+
+  growingTable = filterDuplicateGrowingTableItems(growingTable)
 
   growingTable.sort(([d1], [d2]) => d1 - d2)
 
@@ -79,6 +79,21 @@ const getDistance = (c1: RGBColor, c2: RGBColor): Distance =>
   (Math.abs(c1.value[0] - c2.value[0]) + Math.abs(c1.value[1] - c2.value[1]) + Math.abs(c1.value[2] - c2.value[2])) /
   3 /
   255
+
+const filterDuplicateGrowingTableItems = (growingTable: GrowingTable): GrowingTable => {
+  const seenItems: Set<string> = new Set()
+  const filteredGrowingTable: GrowingTable = []
+
+  for (let [_distance, indexes] of growingTable) {
+    const stringifiedIndexList = indexes.sort().join('-')
+    if (!seenItems.has(stringifiedIndexList)) {
+      seenItems.add(stringifiedIndexList)
+      filteredGrowingTable.push([_distance, indexes])
+    }
+  }
+
+  return filteredGrowingTable
+}
 
 // export const getMostSimilarColors = (colors: RGBColor[], clusterSize: number): RGBColor[] => {
 
