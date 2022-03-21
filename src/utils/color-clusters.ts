@@ -59,8 +59,6 @@ export const getMostSimilarColors = (colors: RGBColor[], clusterSize: number, re
     growingTable = newGrowingTable
   }
 
-  // TODO filter out duplicates [1, 2] === [2, 1]
-
   growingTable = filterDuplicateGrowingTableItems(growingTable)
 
   growingTable.sort(([d1], [d2]) => d1 - d2)
@@ -69,11 +67,6 @@ export const getMostSimilarColors = (colors: RGBColor[], clusterSize: number, re
 
   return growingTable[resultIndex][1].map((index) => colors[index])
 }
-
-const colorsAreEqual =
-  (c1: RGBColor) =>
-  (c2: RGBColor): boolean =>
-    c1.value[0] === c2.value[0] && c1.value[1] === c2.value[1] && c1.value[2] === c2.value[2]
 
 const getDistance = (c1: RGBColor, c2: RGBColor): Distance =>
   (Math.abs(c1.value[0] - c2.value[0]) + Math.abs(c1.value[1] - c2.value[1]) + Math.abs(c1.value[2] - c2.value[2])) /
@@ -94,6 +87,11 @@ const filterDuplicateGrowingTableItems = (growingTable: GrowingTable): GrowingTa
 
   return filteredGrowingTable
 }
+
+// const colorsAreEqual =
+//   (c1: RGBColor) =>
+//   (c2: RGBColor): boolean =>
+//     c1.value[0] === c2.value[0] && c1.value[1] === c2.value[1] && c1.value[2] === c2.value[2]
 
 // export const getMostSimilarColors = (colors: RGBColor[], clusterSize: number): RGBColor[] => {
 
