@@ -2,7 +2,6 @@ import cn from 'classnames'
 import { useMemo } from 'react'
 import { useAppState } from 'src/hooks/useAppState'
 import { AdditiveGradientVariant } from 'src/types'
-import { Dropzone } from 'src/components/Dropzone'
 import { Variant } from 'src/components/Variant'
 import { relativeLuminance } from '~/utils/contrast'
 import { getMostSimilarColors } from '~/utils/color-clusters'
@@ -124,13 +123,11 @@ const Page: React.FC = () => {
   }, [colors])
 
   return (
-    <Dropzone>
-      <div className={cn('grid grid-cols-2 grid-rows-2 gap-1', 'flex-1')}>
-        {variants.map((g, idx) => (
-          <Variant key={idx} variant={g} />
-        ))}
-      </div>
-    </Dropzone>
+    <div className={cn('grid grid-cols-2 grid-rows-2 gap-1', 'flex-1')}>
+      {variants.map((g, idx) => (
+        <Variant key={idx} variant={g} />
+      ))}
+    </div>
   )
 }
 

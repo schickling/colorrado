@@ -7,6 +7,7 @@ import React from 'react'
 import dynamic from 'next/dynamic'
 
 import '../styles.css'
+import { Dropzone } from '~/components/Dropzone'
 
 function App({ Component, pageProps }: any) {
   return (
@@ -15,11 +16,13 @@ function App({ Component, pageProps }: any) {
         <AppStateProvider>
           <Navigation />
 
-          <main className="flex-1 flex">
-            <Component {...pageProps} />
-          </main>
+          <Dropzone>
+            <main className="flex-1 flex">
+              <Component {...pageProps} />
+            </main>
 
-          <Sidebar />
+            <Sidebar />
+          </Dropzone>
         </AppStateProvider>
       </Tooltip.Provider>
     </div>

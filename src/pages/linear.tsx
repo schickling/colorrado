@@ -49,12 +49,10 @@ export default function Index() {
   }, [colors])
 
   return (
-    <Dropzone>
-      <div className={cn('grid grid-cols-2 grid-rows-2 gap-1', 'flex-1')}>
-        {variants.map((g, idx) => (
-          <Variant key={idx} variant={g} />
-        ))}
-      </div>
-    </Dropzone>
+    <div className={cn('grid grid-cols-2 grid-rows-2 gap-1', 'flex-1')}>
+      {variants.map((g, idx) => (
+        <Variant key={idx} variant={g} />
+      ))}
+    </div>
   )
 }
