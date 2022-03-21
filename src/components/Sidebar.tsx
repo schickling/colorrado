@@ -20,7 +20,7 @@ export const Sidebar: React.FC = () => {
         'border-l border-neutral-800',
       )}
     >
-      <AnimateCheckbox />
+      {/* <AnimateCheckbox /> */}
       <ImagesPreview />
       <div className="flex gap-2 flex-wrap">
         {colors.map((c, i) => (
