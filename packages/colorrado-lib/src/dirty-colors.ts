@@ -27,7 +27,7 @@ export const isDirtyColor = (color: RGBColor): boolean => {
   if (isOrangeish && s <= 0.4) return true
 
   const isRedish = isInRange(h, degreeToFloat(0), degreeToFloat(16))
-  if (isRedish && v <= 0.5) return true
+  if (isRedish && v <= 0.3) return true
 
   const isPurpleish = isInRange(h, degreeToFloat(330), degreeToFloat(360))
   if (isPurpleish && v <= 0.5) return true
@@ -36,7 +36,14 @@ export const isDirtyColor = (color: RGBColor): boolean => {
   if (isTealish && v <= 0.35) return true
   if (isTealish && s <= 0.15) return true
 
-  return v <= 0.3
+  const isBlueish = isInRange(h, degreeToFloat(175), degreeToFloat(245))
+  if (isBlueish && v <= 0.4) return true
+
+  if (v <= 0.3) return true
+
+  if (s <= 0.15) return true
+
+  return false
 }
 
 const isInRange = (value: number, min: number, max: number): boolean => {

@@ -28,8 +28,19 @@ export const Sidebar: React.FC = () => {
           <PreviewColor key={i} color={c} colorIndex={i} />
         ))}
       </div>
+      <EnhanceCheckbox />
     </aside>
   )
+}
+
+const EnhanceCheckbox: React.FC = () => {
+  const { enhance, setEnhance } = useAppState()
+  return <div>
+      <label className="flex items-center">
+        <input type="checkbox" checked={enhance} onChange={(e) => setEnhance(e.currentTarget.checked)} />
+        <span className="ml-2 text-sm text-neutral-50">Enhance</span>
+      </label>
+  </div>
 }
 
 const AnimateCheckbox: React.FC = () => {

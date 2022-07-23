@@ -6,6 +6,8 @@ import { imageFromImageUrl } from '../utils/image'
 import { usePersistedState } from './usePersistedState'
 
 export type AppState = {
+  enhance: boolean
+  setEnhance: React.Dispatch<React.SetStateAction<boolean>>
   animate: boolean
   setAnimate: React.Dispatch<React.SetStateAction<boolean>>
   animateSpeedMultiplier: number
@@ -24,6 +26,8 @@ export type SetImages = React.Dispatch<React.SetStateAction<ImageB64String[]>>
 export type SetColors = React.Dispatch<React.SetStateAction<RGBColor[]>>
 
 const DEFAULT_STATE: AppState = {
+  enhance: true,
+  setEnhance: () => {},
   animate: true,
   setAnimate: () => {},
   animateSpeedMultiplier: 1,
@@ -53,6 +57,7 @@ const colorCache = new Map<ImageB64String, RGBColor[]>()
 
 type ProviderProps = React.PropsWithChildren<{}>
 export const AppStateProvider = ({ children }: ProviderProps) => {
+  const [enhance, setEnhance] = usePersistedState(DEFAULT_STATE.enhance, 'enhance')
   const [animate, setAnimate] = usePersistedState(DEFAULT_STATE.animate, 'animate')
   const [animateSpeedMultiplier, setAnimateSpeedMultiplier] = usePersistedState(
     DEFAULT_STATE.animateSpeedMultiplier,
@@ -104,6 +109,8 @@ export const AppStateProvider = ({ children }: ProviderProps) => {
   return (
     <Context.Provider
       value={{
+        enhance,
+        setEnhance,
         animate,
         setAnimate,
         animateSpeedMultiplier,

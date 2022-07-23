@@ -24,7 +24,9 @@ type ColorIndex = number
 
 export const getMostSimilarColors = (colors: RGBColor[], clusterSize: number, resultIndex = 0): RGBColor[] => {
   if (clusterSize > colors.length) {
-    throw new Error('getMostSimilarColors: clusterSize must be less than or equal to the number of colors')
+    throw new Error(
+      `getMostSimilarColors: clusterSize ${clusterSize} must be less than or equal to the number of colors ${colors.length}`,
+    )
   }
 
   const distanceTable = getDistanceTable(colors)
