@@ -1,5 +1,5 @@
 import { Gradient } from '~/types'
-import { rgb } from './color'
+import { toRgbString } from 'colorrado'
 
 type SimpleGradientOffsets = {
   pos?: number
@@ -13,7 +13,7 @@ export function simpleGradientToCSS(gradient: Gradient, offsets: SimpleGradientO
     const stops = gradient.stops
       .map((s, i) => {
         const pos = s.pos ?? (1 / (gradient.stops.length - 1)) * i * 100
-        return `${rgb(s.color)} ${pos + posOffset}%`
+        return `${toRgbString(s.color)} ${pos + posOffset}%`
       })
       .join(', ')
 
@@ -23,7 +23,7 @@ export function simpleGradientToCSS(gradient: Gradient, offsets: SimpleGradientO
   if (gradient.type === 'radial') {
     const posX = gradient.posX ?? 50
     const posY = gradient.posY ?? 50
-    const stops = gradient.stops.map((s) => `${rgb(s.color)}`).join(', ')
+    const stops = gradient.stops.map((s) => `${toRgbString(s.color)}`).join(', ')
 
     return `radial-gradient(at ${posX}% ${posY}%, ${stops})`
   }

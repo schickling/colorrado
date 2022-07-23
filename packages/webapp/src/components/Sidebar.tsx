@@ -4,7 +4,7 @@ import cn from 'classnames'
 import React from 'react'
 import { HexColorInput, RgbColorPicker } from 'react-colorful'
 import { useAppState } from 'src/hooks/useAppState'
-import { hex, hexToRgb, rgb } from 'src/utils/color'
+import { hex, hexToRgb, toRgbString } from 'colorrado'
 
 import type { RGBColor } from '~/types'
 import { imageFromImageUrl } from '~/utils/image'
@@ -135,12 +135,12 @@ const ImagePreview: React.FC<{ image: string; imageIndex: number }> = ({ image, 
   )
 }
 
-const PreviewColor: React.FC<{ color: RGBColor; colorIndex: number }> = ({ color, colorIndex }) => {
+export const PreviewColor: React.FC<{ color: RGBColor; colorIndex: number }> = ({ color, colorIndex }) => {
   return (
     <>
       <HoverCard.Root openDelay={0} closeDelay={50}>
         <HoverCard.Trigger asChild>
-          <div className="w-8 h-8 rounded-full shrink-0" style={{ backgroundColor: rgb(color) }}></div>
+          <div className="w-8 h-8 rounded-full shrink-0" style={{ backgroundColor: toRgbString(color) }}></div>
         </HoverCard.Trigger>
         <HoverCard.Content align="center" sideOffset={5}>
           <HoverCard.Arrow offset={10} className="text-neutral-100" fill="currentColor" />

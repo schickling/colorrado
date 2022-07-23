@@ -1,7 +1,7 @@
 import React from 'react'
 import { useAppState } from '~/hooks/useAppState'
 import { Color } from '~/types'
-import { rgb } from '~/utils/color'
+import { toRgbString } from 'colorrado'
 import { contrastRatio } from '~/utils/contrast'
 
 const Page: React.FC = () => {
@@ -29,7 +29,7 @@ type ContrastProps = {
 
 const Contrast: React.FC<ContrastProps> = ({ color, against }) => {
   return (
-    <div style={{ backgroundColor: rgb(against), color: rgb(color) }} className="flex flex-col p-4 rounded-md">
+    <div style={{ backgroundColor: toRgbString(against), color: toRgbString(color) }} className="flex flex-col p-4 rounded-md">
       <span className="text-2xl font-bold uppercase">Text</span>
       <span className="text-sm">{contrastRatio(against, color)}</span>
     </div>

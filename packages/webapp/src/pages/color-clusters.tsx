@@ -1,9 +1,8 @@
 import cn from 'classnames'
-import { getMostSimilarColors } from 'colorrado'
+import { getMostSimilarColors, toRgbString } from 'colorrado'
 import React from 'react'
 
 import { useAppState } from '~/hooks/useAppState'
-import { rgb } from '~/utils/color'
 
 const Page: React.FC = () => {
   return (
@@ -26,7 +25,7 @@ const ColorList: React.FC<{ size: number }> = ({ size }) => {
   return (
     <div className="flex gap-2">
       {mostSimilarColors.map((color, i) => (
-        <div key={i} className={cn('rounded-full w-8 h-8')} style={{ background: rgb(color) }} />
+        <div key={i} className={cn('rounded-full w-8 h-8')} style={{ background: toRgbString(color) }} />
       ))}
     </div>
   )

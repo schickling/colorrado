@@ -1,22 +1,9 @@
-import type { RGBColor } from 'colorrado'
+import type { Color } from 'colorrado'
 
-export type { RGBColor } from 'colorrado'
+export type { RGBColor, Color, HexColor, HSLColor } from 'colorrado'
 
 export type ImageB64String = string
 
-export type RGBAColor = {
-  type: 'rgba'
-  value: [number, number, number, number]
-}
-export type HSLColor = { type: 'hsl'; value: [number, number, number] }
-
-export type HexColor = {
-  type: 'hex'
-  /** Without leading # */
-  value: string
-}
-
-export type Color = RGBColor | RGBAColor | HSLColor | HexColor
 
 export type LinearGradient = {
   type: 'linear'
