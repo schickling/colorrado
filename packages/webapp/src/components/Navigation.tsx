@@ -31,6 +31,7 @@ export function Navigation() {
         <Item href="/linear">Linear Gradients</Item>
         <Item href="/radial">Radial Gradients</Item>
         <Item href="/additive">Additive Gradients</Item>
+        <Item href="/mesh">Mesh Gradients</Item>
       </aside>
       <div className="text-xs p-4 text-neutral-600 leading-5">
         <a
