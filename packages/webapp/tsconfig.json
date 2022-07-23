@@ -29,6 +29,7 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "incremental": true,
+    "tsBuildInfoFile": "./dist/.tsbuildinfo.json",
     "module": "esnext"
   },
   "exclude": [
