@@ -40,7 +40,7 @@ export const isDirtyColor = (color: RGBColor): boolean => {
 
   const isBlueish = isInRange(h, degreeToFloat(175), degreeToFloat(245))
   if (isBlueish && v <= 0.4) return true
-  if (isBlueish && s <= 0.15) return true
+  if (isBlueish && s <= 0.05) return true
 
   if (v <= 0.3) return true
 
