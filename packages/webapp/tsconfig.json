@@ -19,9 +19,7 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": [
-        "./src/*"
-      ],
+      "~/*": [ "./src/*" ],
       "colorrado": ["../colorrado-lib"],
     },
     "allowJs": true,

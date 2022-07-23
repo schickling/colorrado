@@ -2,8 +2,8 @@ import cn from 'classnames'
 import { getMostSimilarColors } from 'colorrado'
 import React from 'react'
 
-import { useAppState } from '~/hooks/useAppState.js'
-import { rgb } from '~/utils/color.js'
+import { useAppState } from '~/hooks/useAppState'
+import { rgb } from '~/utils/color'
 
 const Page: React.FC = () => {
   return (

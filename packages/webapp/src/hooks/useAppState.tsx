@@ -1,8 +1,8 @@
 import ColorThief from 'colorthief'
-import image from 'next/image'
 import { createContext, useContext, useEffect, useState } from 'react'
-import { ImageB64String, RGBColor } from 'src/types'
-import { imageFromImageUrl } from '~/utils/image'
+import type { ImageB64String, RGBColor } from 'src/types'
+
+import { imageFromImageUrl } from '../utils/image'
 import { usePersistedState } from './usePersistedState'
 
 export type AppState = {
@@ -52,7 +52,7 @@ const Context = createContext<AppState>(DEFAULT_STATE)
 const colorCache = new Map<ImageB64String, RGBColor[]>()
 
 type ProviderProps = React.PropsWithChildren<{}>
-export function AppStateProvider({ children }: ProviderProps) {
+export const AppStateProvider = ({ children }: ProviderProps) => {
   const [animate, setAnimate] = usePersistedState(DEFAULT_STATE.animate, 'animate')
   const [animateSpeedMultiplier, setAnimateSpeedMultiplier] = usePersistedState(
     DEFAULT_STATE.animateSpeedMultiplier,
@@ -121,7 +121,7 @@ export function AppStateProvider({ children }: ProviderProps) {
   )
 }
 
-export function useAppState() {
+export const useAppState = () => {
   const { colors, setColors, ...state } = useContext(Context)
 
   const setColor = (idx: number, color: RGBColor) => {

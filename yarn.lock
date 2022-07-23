@@ -1693,6 +1693,19 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "colorrado@workspace:packages/colorrado-lib"
   dependencies:
+    "@typescript-eslint/eslint-plugin": ^5.26.0
+    "@typescript-eslint/parser": ^5.26.0
+    eslint: ^8.20.0
+    eslint-config-prettier: ^8.5.0
+    eslint-plugin-import: ^2.26.0
+    eslint-plugin-only-warn: ^1.0.3
+    eslint-plugin-prefer-arrow: ^1.2.3
+    eslint-plugin-prettier: ^4.2.1
+    eslint-plugin-react: ^7.30.1
+    eslint-plugin-react-hooks: ^4.6.0
+    eslint-plugin-simple-import-sort: ^7.0.0
+    eslint-plugin-unicorn: ^43.0.1
+    prettier: ^2.7.1
     typescript: ^4.7.4
     vite: ^3.0.2
     vitest: ^0.18.1
@@ -4978,19 +4991,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
-    "@typescript-eslint/eslint-plugin": ^5.26.0
-    "@typescript-eslint/parser": ^5.26.0
-    eslint: ^8.20.0
-    eslint-config-prettier: ^8.5.0
-    eslint-plugin-import: ^2.26.0
-    eslint-plugin-only-warn: ^1.0.3
-    eslint-plugin-prefer-arrow: ^1.2.3
-    eslint-plugin-prettier: ^4.2.1
-    eslint-plugin-react: ^7.30.1
-    eslint-plugin-react-hooks: ^4.6.0
-    eslint-plugin-simple-import-sort: ^7.0.0
-    eslint-plugin-unicorn: ^43.0.1
-    prettier: ^2.7.1
     typescript: ^4.7.4
   languageName: unknown
   linkType: soft

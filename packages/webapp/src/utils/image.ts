@@ -33,22 +33,22 @@ const resizeImage = ({ file, maxSize }: IResizeImageOptions): Promise<string> =>
     canvas.width = width
     canvas.height = height
     canvas.getContext('2d')!.drawImage(image, 0, 0, width, height)
-    let dataUrl = canvas.toDataURL('image/jpeg')
+    const dataUrl = canvas.toDataURL('image/jpeg')
 
     return dataUrl
     // return dataURItoBlob(dataUrl)
   }
 
   return new Promise((resolve, reject) => {
-    if (!file.type.match(/image.*/)) {
+    if (!/image.*/.test(file.type)) {
       reject(new Error('Not an image'))
       return
     }
 
-    reader.onload = (readerEvent: any) => {
-      image.onload = () => resolve(resize())
+    reader.addEventListener('load', (readerEvent: any) => {
+      image.addEventListener('load', () => resolve(resize()))
       image.src = readerEvent.target.result
-    }
+    })
     reader.readAsDataURL(file)
   })
 }
