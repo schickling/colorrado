@@ -5,7 +5,7 @@ import { Variant } from 'src/components/Variant'
 import { useAppState } from 'src/hooks/useAppState'
 import type { AdditiveGradientVariant } from 'src/types'
 
-import { relativeLuminance } from '~/utils/contrast.js'
+import { relativeLuminance } from '~/utils/contrast'
 
 const Page: React.FC = () => {
   const { colors } = useAppState()

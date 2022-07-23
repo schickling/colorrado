@@ -1,6 +1,6 @@
 import type { Color, HexColor, HSLColor, HSVColor, RGBColor } from './types.js'
 
-export const hex = (color: Color): string => {
+export const toHexString = (color: Color): string => {
   if (color.type === 'rgb') {
     return `#${color.value.map((c) => c.toString(16).padStart(2, '0')).join('')}`
   }

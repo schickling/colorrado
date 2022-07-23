@@ -4,7 +4,7 @@ import cn from 'classnames'
 import React from 'react'
 import { HexColorInput, RgbColorPicker } from 'react-colorful'
 import { useAppState } from 'src/hooks/useAppState'
-import { hex, hexToRgb, toRgbString } from 'colorrado'
+import { toHexString, hexToRgb, toRgbString } from 'colorrado'
 
 import type { RGBColor } from '~/types'
 import { imageFromImageUrl } from '~/utils/image'
@@ -176,7 +176,7 @@ const ColorPicker: React.FC<{ color: RGBColor; colorIndex: number }> = ({ color,
       />
       <HexColorInput
         className="bg-transparent w-full border border-gray-300 p-2 rounded outline-none text-gray-400 focus:text-gray-700"
-        color={hex(color)}
+        color={toHexString(color)}
         prefixed
         onChange={(value) => setColor(colorIndex, hexToRgb({ type: 'hex', value }))}
       />

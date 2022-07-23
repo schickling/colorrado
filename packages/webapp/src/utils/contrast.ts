@@ -1,4 +1,4 @@
-import type { Color } from '~/types'
+import type { Color } from 'colorrado'
 
 export const relativeLuminance = (color: Color): number => {
   if (color.type === 'rgb') {

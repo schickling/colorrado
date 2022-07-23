@@ -1,7 +1,6 @@
 import React from 'react'
 import { useAppState } from '~/hooks/useAppState'
-import { Color } from '~/types'
-import { toRgbString } from 'colorrado'
+import { toRgbString, Color } from 'colorrado'
 import { contrastRatio } from '~/utils/contrast'
 
 const Page: React.FC = () => {
