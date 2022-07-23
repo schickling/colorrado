@@ -1,40 +1,26 @@
 import cn from 'classnames'
-import { detectDirtyColors, getMostSimilarColors, RGBColor } from 'colorrado'
+import { enhanceColors } from 'colorrado'
 import { useMemo } from 'react'
 import { Variant } from 'src/components/Variant'
 import { useAppState } from 'src/hooks/useAppState'
 import type { AdditiveGradientVariant } from 'src/types'
 
-import { relativeLuminance } from '~/utils/contrast'
+// import { relativeLuminance } from '~/utils/contrast'
 
 const Page: React.FC = () => {
   const { colors, enhance } = useAppState()
 
   const variants = useMemo(() => {
-    let colorCluster3: RGBColor[]
+    // const darkColors = colors.filter((c) => relativeLuminance(c) < 0.4)
+    // const lightColors = colors.filter((c) => relativeLuminance(c) > 0.4)
 
-    if (enhance) {
-      const darkColors = colors.filter((c) => relativeLuminance(c) < 0.4)
-      const lightColors = colors.filter((c) => relativeLuminance(c) > 0.4)
-
-      const nonDirtyColors = detectDirtyColors(colors).nonDirty
-      const niceColors = nonDirtyColors.length > 1 ? nonDirtyColors : colors
-
-      console.log(darkColors, lightColors)
-
-      // TODO make `resultIndex` configurable via UI
-      const clusterSize = Math.min(3, niceColors.length)
-      console.log({ clusterSize, nonDirtyColors, colors })
-
-      colorCluster3 = getMostSimilarColors(niceColors, clusterSize, 0)
-      // colorCluster3 = niceColors
-    } else {
-      colorCluster3 = colors
-    }
-
-    if (colorCluster3.length < 3) {
-      colorCluster3 = colors
-    }
+    const colorCluster3 = enhance
+      ? enhanceColors(colors, {
+          clustering: { clusterSize: 3 },
+          filterDirtyColors: true,
+          minimum: { minimumColors: 3 },
+        })
+      : colors
 
     const v1: AdditiveGradientVariant = {
       type: 'additive-gradient',
