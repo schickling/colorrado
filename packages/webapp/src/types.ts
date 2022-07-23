@@ -1,6 +1,9 @@
+import type { RGBColor } from 'colorrado'
+
+export type { RGBColor } from 'colorrado'
+
 export type ImageB64String = string
 
-export type RGBColor = { type: 'rgb'; value: [number, number, number] }
 export type RGBAColor = {
   type: 'rgba'
   value: [number, number, number, number]

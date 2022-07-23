@@ -1,4 +1,4 @@
-import { RGBColor } from '~/types'
+import type { RGBColor } from './types.js'
 
 export type Distance = number
 export type DistanceTable = [ColorIndex, ColorIndex, Distance][]
@@ -9,7 +9,7 @@ export const getDistanceTable = (colors: RGBColor[]): DistanceTable => {
   for (let color1Index = 0; color1Index < colors.length; color1Index++) {
     for (let color2Index = 0; color2Index < colors.length; color2Index++) {
       if (color1Index !== color2Index) {
-        distances.push([color1Index, color2Index, getDistance(colors[color1Index], colors[color2Index])])
+        distances.push([color1Index, color2Index, getDistance(colors[color1Index]!, colors[color2Index]!)])
       }
     }
   }
@@ -65,7 +65,7 @@ export const getMostSimilarColors = (colors: RGBColor[], clusterSize: number, re
 
   // console.table(growingTable)
 
-  return growingTable[resultIndex][1].map((index) => colors[index])
+  return growingTable[resultIndex]![1].map((index) => colors[index]!)
 }
 
 const getDistance = (c1: RGBColor, c2: RGBColor): Distance =>
@@ -77,7 +77,7 @@ const filterDuplicateGrowingTableItems = (growingTable: GrowingTable): GrowingTa
   const seenItems: Set<string> = new Set()
   const filteredGrowingTable: GrowingTable = []
 
-  for (let [_distance, indexes] of growingTable) {
+  for (const [_distance, indexes] of growingTable) {
     const stringifiedIndexList = indexes.sort().join('-')
     if (!seenItems.has(stringifiedIndexList)) {
       seenItems.add(stringifiedIndexList)

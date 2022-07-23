@@ -1,0 +1,15 @@
+{
+  "name": "colorrado",
+  "version": "0.0.1",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "devDependencies": {
+    "typescript": "^4.7.4",
+    "vite": "^3.0.2",
+    "vitest": "^0.18.1"
+  }
+}

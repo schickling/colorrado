@@ -3,3 +3,13 @@ yarn-error.log
 
 .env
 .next
+
+dist
+
+.direnv
+
+/.yarn/*
+!/.yarn/releases
+!/.yarn/patches
+!/.yarn/plugins
+!/.yarn/sdks

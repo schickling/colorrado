@@ -1,11 +1,12 @@
-import cn from 'classnames'
-import { RgbColorPicker, HexColorInput } from 'react-colorful'
-import { useAppState } from 'src/hooks/useAppState'
-import { hex, hexToRgb, rgb } from 'src/utils/color'
-import { RGBColor } from '~/types'
-import React from 'react'
 import * as Heroicons from '@heroicons/react/solid'
 import * as HoverCard from '@radix-ui/react-hover-card'
+import cn from 'classnames'
+import React from 'react'
+import { HexColorInput, RgbColorPicker } from 'react-colorful'
+import { useAppState } from 'src/hooks/useAppState'
+import { hex, hexToRgb, rgb } from 'src/utils/color'
+
+import type { RGBColor } from '~/types'
 import { imageFromImageUrl } from '~/utils/image'
 
 export const Sidebar: React.FC = () => {

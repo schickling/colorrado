@@ -1,6 +1,7 @@
 import { expect, test } from 'vitest'
-import { RGBColor } from '~/types'
-import { getMostSimilarColors } from './color-clusters'
+
+import { getMostSimilarColors } from './color-clusters.js'
+import type { RGBColor } from './types.js'
 
 test.only('size 2', () => {
   const colors: RGBColor[] = [
