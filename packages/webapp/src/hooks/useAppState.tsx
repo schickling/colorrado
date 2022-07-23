@@ -43,7 +43,6 @@ const defaultColors = [
   { type: 'rgb', value: [0, 0, 0] },
 ] as RGBColor[]
 
-
 const DEFAULT_STATE: AppState = {
   enhance: true,
   setEnhance: () => {},
@@ -118,7 +117,10 @@ export const AppStateProvider = ({ children }: ProviderProps) => {
     })
   }, [images, currentImageIndex, setColors])
 
-  const enhancedColors = useMemo(() => enhanceColors(colors, enhanceOptions), [colors, enhanceOptions])
+  const enhancedColors = useMemo(
+    () => (colors === defaultColors ? colors : enhanceColors(colors, enhanceOptions)),
+    [colors, enhanceOptions],
+  )
 
   return (
     <Context.Provider

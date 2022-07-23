@@ -1,5 +1,6 @@
 import { getMostSimilarColors } from './color-clusters.js'
 import { detectDirtyColors } from './dirty-colors.js'
+import { generateColors } from './generate-colors.js'
 import type { RGBColor } from './types'
 
 export type EnhanceOptions = {
@@ -20,21 +21,25 @@ export const enhanceColors = (colors: RGBColor[], options: EnhanceOptions = {}):
   try {
     if (options.filterDirtyColors) {
       const { nonDirty } = detectDirtyColors(resultColors)
-      if (nonDirty.length >= (options.minimum?.minimumColors ?? 1)) {
-        resultColors = nonDirty
-      }
+      resultColors = nonDirty
+    }
+
+    if (resultColors.length > 0 && resultColors.length < (options.minimum?.minimumColors ?? 2)) {
+      resultColors = generateColors(resultColors, options.minimum?.minimumColors ?? 2)
     }
 
     if (options.clustering) {
       resultColors = getMostSimilarColors(resultColors, options.clustering.clusterSize)
     }
 
-    if (resultColors.length < (options.minimum?.minimumColors ?? 1)) {
+    if (resultColors.length === 0) {
       throw new Error('Not enough colors detected')
     }
 
     return resultColors
   } catch (e) {
+    console.warn('enhanceColors error', e)
+
     if (shouldFail) {
       throw e
     } else {
