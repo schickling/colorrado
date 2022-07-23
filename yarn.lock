@@ -5443,6 +5443,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
+    "@react-three/drei": ^9.17.3
+    "@react-three/fiber": ^8.2.1
+    "@types/three": ^0.142.0
     "@typescript-eslint/eslint-plugin": ^5.26.0
     "@typescript-eslint/parser": ^5.26.0
     eslint: ^8.20.0
@@ -5456,6 +5459,8 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     eslint-plugin-unicorn: ^43.0.1
     prettier: ^2.7.1
+    raw-loader: ^4.0.2
+    three: ^0.142.0
     typescript: ^4.7.4
   languageName: unknown
   linkType: soft

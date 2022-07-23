@@ -1,17 +1,35 @@
-import { Fragment, useRef, useCallback } from 'react'
+import { Fragment, useRef, useCallback, useEffect } from 'react'
 import { Canvas as R3FCanvas, useThree, useFrame } from '@react-three/fiber'
 import { OrthographicCamera, PerspectiveCamera, OrbitControls } from '@react-three/drei'
 import { Mesh, DoubleSide, Uniform, Camera } from 'three'
 import cn from 'classnames'
-import { MeshGradientConfig, Point, useMeshGradient1 } from 'src/hooks/useMeshGradient'
+import {
+  MeshGradientConfig,
+  Point,
+  useMeshGradient1,
+  useMeshGradient2,
+  useMeshGradient3,
+  useMeshGradient4,
+} from 'src/hooks/useMeshGradient'
 import fragmentShader from '../shaders/mesh_fragment.glsl'
 import vertexShader from '../shaders/mesh_vertex.glsl'
+import { useAppState } from '~/hooks/useAppState'
 
 export default function Index() {
+  const { enhanceOptions, setEnhanceOptions } = useAppState()
   const config1 = useMeshGradient1()
-  const config2 = useMeshGradient1()
-  const config3 = useMeshGradient1()
-  const config4 = useMeshGradient1()
+  const config2 = useMeshGradient2()
+  const config3 = useMeshGradient3()
+  const config4 = useMeshGradient4()
+
+  useEffect(() => {
+    setEnhanceOptions({
+      ...enhanceOptions,
+      minimum: {
+        minimumColors: 4,
+      },
+    })
+  }, [])
 
   return (
     <div className={cn('grid grid-cols-2 grid-rows-2 gap-1', 'flex-1')}>
