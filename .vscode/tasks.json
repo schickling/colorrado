@@ -17,5 +17,17 @@
         "clear": false
       }
     },
+    {
+      "label": "test",
+      "type": "shell",
+      "command": "yarn test:dev",
+      "presentation": {
+        "focus": true,
+        "panel": "shared",
+        "group": "test",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    }
 	]
 }

@@ -5,7 +5,9 @@
   "scripts": {
     "build:ts": "tsc --build tsconfig.all.json",
     "build:clean": "fish -c 'rm -rf packages/**/dist **/node_modules/.vite*'",
-    "dev:ts": "yarn build:ts --watch"
+    "dev:ts": "yarn build:ts --watch",
+    "test": "CI=true yarn workspaces foreach --parallel --all run test",
+    "test:dev": "yarn workspaces foreach --parallel --all run test"
   },
   "devDependencies": {
     "typescript": "^4.7.4"

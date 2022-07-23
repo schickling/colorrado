@@ -3,7 +3,7 @@ import { expect, test } from 'vitest'
 import { getMostSimilarColors } from './color-clusters.js'
 import type { RGBColor } from './types.js'
 
-test.only('size 2', () => {
+test('size 2', () => {
   const colors: RGBColor[] = [
     { type: 'rgb', value: [0, 0, 0] },
     { type: 'rgb', value: [1, 1, 1] },
