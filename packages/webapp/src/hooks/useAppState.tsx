@@ -1,5 +1,6 @@
+import { EnhanceOptions, enhanceColors } from 'colorrado'
 import ColorThief from 'colorthief'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import type { ImageB64String, RGBColor } from 'src/types'
 
 import { imageFromImageUrl } from '../utils/image'
@@ -8,6 +9,8 @@ import { usePersistedState } from './usePersistedState'
 export type AppState = {
   enhance: boolean
   setEnhance: React.Dispatch<React.SetStateAction<boolean>>
+  enhanceOptions: EnhanceOptions
+  setEnhanceOptions: React.Dispatch<React.SetStateAction<EnhanceOptions>>
   animate: boolean
   setAnimate: React.Dispatch<React.SetStateAction<boolean>>
   animateSpeedMultiplier: number
@@ -20,14 +23,32 @@ export type AppState = {
 
   colors: RGBColor[]
   setColors: SetColors
+
+  enhancedColors: RGBColor[]
 }
 
 export type SetImages = React.Dispatch<React.SetStateAction<ImageB64String[]>>
 export type SetColors = React.Dispatch<React.SetStateAction<RGBColor[]>>
 
+const defaultColors = [
+  { type: 'rgb', value: [0, 0, 0] },
+  { type: 'rgb', value: [0, 0, 0] },
+  { type: 'rgb', value: [0, 0, 0] },
+  { type: 'rgb', value: [0, 0, 0] },
+  { type: 'rgb', value: [0, 0, 0] },
+  { type: 'rgb', value: [0, 0, 0] },
+  { type: 'rgb', value: [0, 0, 0] },
+  { type: 'rgb', value: [0, 0, 0] },
+  { type: 'rgb', value: [0, 0, 0] },
+  { type: 'rgb', value: [0, 0, 0] },
+] as RGBColor[]
+
+
 const DEFAULT_STATE: AppState = {
   enhance: true,
   setEnhance: () => {},
+  enhanceOptions: { minimum: { minimumColors: 3 } },
+  setEnhanceOptions: () => {},
   animate: true,
   setAnimate: () => {},
   animateSpeedMultiplier: 1,
@@ -36,19 +57,9 @@ const DEFAULT_STATE: AppState = {
   setImages: () => {},
   currentImageIndex: 0,
   setCurrentImageIndex: () => {},
-  colors: [
-    { type: 'rgb', value: [0, 0, 0] },
-    { type: 'rgb', value: [0, 0, 0] },
-    { type: 'rgb', value: [0, 0, 0] },
-    { type: 'rgb', value: [0, 0, 0] },
-    { type: 'rgb', value: [0, 0, 0] },
-    { type: 'rgb', value: [0, 0, 0] },
-    { type: 'rgb', value: [0, 0, 0] },
-    { type: 'rgb', value: [0, 0, 0] },
-    { type: 'rgb', value: [0, 0, 0] },
-    { type: 'rgb', value: [0, 0, 0] },
-  ],
+  colors: defaultColors,
   setColors: () => {},
+  enhancedColors: defaultColors,
 }
 
 const Context = createContext<AppState>(DEFAULT_STATE)
@@ -58,6 +69,7 @@ const colorCache = new Map<ImageB64String, RGBColor[]>()
 type ProviderProps = React.PropsWithChildren<{}>
 export const AppStateProvider = ({ children }: ProviderProps) => {
   const [enhance, setEnhance] = usePersistedState(DEFAULT_STATE.enhance, 'enhance')
+  const [enhanceOptions, setEnhanceOptions] = usePersistedState(DEFAULT_STATE.enhanceOptions, 'enhanceOptions')
   const [animate, setAnimate] = usePersistedState(DEFAULT_STATE.animate, 'animate')
   const [animateSpeedMultiplier, setAnimateSpeedMultiplier] = usePersistedState(
     DEFAULT_STATE.animateSpeedMultiplier,
@@ -106,11 +118,15 @@ export const AppStateProvider = ({ children }: ProviderProps) => {
     })
   }, [images, currentImageIndex, setColors])
 
+  const enhancedColors = useMemo(() => enhanceColors(colors, enhanceOptions), [colors, enhanceOptions])
+
   return (
     <Context.Provider
       value={{
         enhance,
         setEnhance,
+        enhanceOptions,
+        setEnhanceOptions,
         animate,
         setAnimate,
         animateSpeedMultiplier,
@@ -121,6 +137,7 @@ export const AppStateProvider = ({ children }: ProviderProps) => {
         setCurrentImageIndex,
         colors,
         setColors,
+        enhancedColors,
       }}
     >
       {children}

@@ -10,7 +10,7 @@ import type { RGBColor } from '~/types'
 import { imageFromImageUrl } from '~/utils/image'
 
 export const Sidebar: React.FC = () => {
-  const { colors } = useAppState()
+  const { colors, enhancedColors } = useAppState()
 
   return (
     <aside
@@ -29,18 +29,84 @@ export const Sidebar: React.FC = () => {
         ))}
       </div>
       <EnhanceCheckbox />
+      <div className="flex gap-2 flex-wrap">
+        {enhancedColors.map((c, i) => (
+          <PreviewColor key={i} color={c} colorIndex={i} />
+        ))}
+      </div>
     </aside>
   )
 }
 
 const EnhanceCheckbox: React.FC = () => {
-  const { enhance, setEnhance } = useAppState()
-  return <div>
+  const { enhance, setEnhance, enhanceOptions, setEnhanceOptions } = useAppState()
+  return (
+    <div className="gap-3">
       <label className="flex items-center">
         <input type="checkbox" checked={enhance} onChange={(e) => setEnhance(e.currentTarget.checked)} />
         <span className="ml-2 text-sm text-neutral-50">Enhance</span>
       </label>
-  </div>
+      <label className="flex items-center">
+        <input
+          type="checkbox"
+          checked={enhanceOptions.filterDirtyColors}
+          onChange={(e) => setEnhanceOptions({ ...enhanceOptions, filterDirtyColors: e.currentTarget.checked })}
+        />
+        <span className="ml-2 text-sm text-neutral-50">Filter Dirty Colors</span>
+      </label>
+      <label className="flex items-center">
+        <input
+          type="checkbox"
+          checked={enhanceOptions.clustering !== undefined}
+          onChange={(e) =>
+            setEnhanceOptions({
+              ...enhanceOptions,
+              clustering: e.currentTarget.checked
+                ? enhanceOptions.clustering
+                  ? { ...enhanceOptions.clustering }
+                  : { clusterSize: 3 }
+                : undefined,
+            })
+          }
+        />
+        <span className="ml-2 text-sm text-neutral-50">Enable Clustering</span>
+      </label>
+      <label className="flex items-center">
+        <input
+          type="number"
+          className="bg-transparent w-14"
+          value={enhanceOptions.clustering?.clusterSize ?? -1}
+          onChange={(e) =>
+            setEnhanceOptions({
+              ...enhanceOptions,
+              clustering: {
+                clusterSize: parseInt(e.currentTarget.value, 10),
+              },
+            })
+          }
+        />
+        <span className="ml-2 text-sm text-neutral-50">Cluster Size</span>
+      </label>
+      <label className="flex items-center">
+        <input
+          type="number"
+          className="bg-transparent w-14"
+          min={3}
+          value={enhanceOptions.minimum?.minimumColors ?? 3}
+          onChange={(e) =>
+            setEnhanceOptions({
+              ...enhanceOptions,
+              minimum: {
+                ...enhanceOptions.minimum,
+                minimumColors: parseInt(e.currentTarget.value, 10),
+              },
+            })
+          }
+        />
+        <span className="ml-2 text-sm text-neutral-50">Minimum Colors</span>
+      </label>
+    </div>
+  )
 }
 
 const AnimateCheckbox: React.FC = () => {

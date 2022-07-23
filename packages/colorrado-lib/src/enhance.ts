@@ -20,7 +20,9 @@ export const enhanceColors = (colors: RGBColor[], options: EnhanceOptions = {}):
   try {
     if (options.filterDirtyColors) {
       const { nonDirty } = detectDirtyColors(resultColors)
-      resultColors = nonDirty
+      if (nonDirty.length >= (options.minimum?.minimumColors ?? 1)) {
+        resultColors = nonDirty
+      }
     }
 
     if (options.clustering) {

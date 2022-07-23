@@ -1,5 +1,4 @@
 import cn from 'classnames'
-import { enhanceColors } from 'colorrado'
 import { useMemo } from 'react'
 import { Variant } from 'src/components/Variant'
 import { useAppState } from 'src/hooks/useAppState'
@@ -8,19 +7,13 @@ import type { AdditiveGradientVariant } from 'src/types'
 // import { relativeLuminance } from '~/utils/contrast'
 
 const Page: React.FC = () => {
-  const { colors, enhance } = useAppState()
+  const { colors, enhance, enhancedColors } = useAppState()
 
   const variants = useMemo(() => {
     // const darkColors = colors.filter((c) => relativeLuminance(c) < 0.4)
     // const lightColors = colors.filter((c) => relativeLuminance(c) > 0.4)
 
-    const colorCluster3 = enhance
-      ? enhanceColors(colors, {
-          clustering: { clusterSize: 3 },
-          filterDirtyColors: true,
-          minimum: { minimumColors: 3 },
-        })
-      : colors
+    const colorCluster3 = enhance ? enhancedColors : colors
 
     const v1: AdditiveGradientVariant = {
       type: 'additive-gradient',
@@ -55,8 +48,8 @@ const Page: React.FC = () => {
         // {
         //   type: 'radial',
         //   stops: [
-        //     { color: { type: 'rgba', value: [...colors[3].value, 1] } },
-        //     { color: { type: 'rgba', value: [...colors[3].value, 0] } },
+        //     { color: { type: 'rgba', value: [...colorCluster3[3].value, 1] } },
+        //     { color: { type: 'rgba', value: [...colorCluster3[3].value, 0] } },
         //   ],
         //   posX: 0,
         //   posY: 100,
@@ -71,24 +64,24 @@ const Page: React.FC = () => {
           type: 'linear',
           angle: 336,
           stops: [
-            { color: { type: 'rgba', value: [...colors[0]!.value, 1] } },
-            { color: { type: 'rgba', value: [...colors[0]!.value, 0] } },
+            { color: { type: 'rgba', value: [...colorCluster3[0]!.value, 1] } },
+            { color: { type: 'rgba', value: [...colorCluster3[0]!.value, 0] } },
           ],
         },
         {
           type: 'linear',
           angle: 217,
           stops: [
-            { color: { type: 'rgba', value: [...colors[1]!.value, 1] } },
-            { color: { type: 'rgba', value: [...colors[1]!.value, 0] } },
+            { color: { type: 'rgba', value: [...colorCluster3[1]!.value, 1] } },
+            { color: { type: 'rgba', value: [...colorCluster3[1]!.value, 0] } },
           ],
         },
         {
           type: 'linear',
           angle: 127,
           stops: [
-            { color: { type: 'rgba', value: [...colors[2]!.value, 1] } },
-            { color: { type: 'rgba', value: [...colors[2]!.value, 0] } },
+            { color: { type: 'rgba', value: [...colorCluster3[2]!.value, 1] } },
+            { color: { type: 'rgba', value: [...colorCluster3[2]!.value, 0] } },
           ],
         },
       ],
@@ -100,31 +93,31 @@ const Page: React.FC = () => {
         {
           type: 'radial',
           stops: [
-            { color: { type: 'rgba', value: [...colors[0]!.value, 1] } },
-            { color: { type: 'rgba', value: [...colors[0]!.value, 0] } },
+            { color: { type: 'rgba', value: [...colorCluster3[0]!.value, 1] } },
+            { color: { type: 'rgba', value: [...colorCluster3[0]!.value, 0] } },
           ],
         },
         {
           type: 'linear',
           angle: 217,
           stops: [
-            { color: { type: 'rgba', value: [...colors[5]!.value, 1] } },
-            { color: { type: 'rgba', value: [...colors[5]!.value, 0] } },
+            { color: { type: 'rgba', value: [...colorCluster3[1]!.value, 1] } },
+            { color: { type: 'rgba', value: [...colorCluster3[1]!.value, 0] } },
           ],
         },
         {
           type: 'linear',
           angle: 127,
           stops: [
-            { color: { type: 'rgba', value: [...colors[2]!.value, 1] } },
-            { color: { type: 'rgba', value: [...colors[2]!.value, 0] } },
+            { color: { type: 'rgba', value: [...colorCluster3[2]!.value, 1] } },
+            { color: { type: 'rgba', value: [...colorCluster3[2]!.value, 0] } },
           ],
         },
       ],
     }
 
     return [v1, v2, v3]
-  }, [colors, enhance])
+  }, [colors, enhance, enhancedColors])
 
   return (
     <div className={cn('grid grid-cols-2 grid-rows-2 gap-1', 'flex-1')}>
