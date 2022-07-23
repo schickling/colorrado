@@ -1,0 +1,21 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+      "label": "dev:ts",
+      "type": "shell",
+      "command": "yarn dev:ts",
+      "problemMatcher": [
+        "$tsc-watch"
+      ],
+      "isBackground": true,
+      "presentation": {
+        "focus": false,
+        "panel": "shared",
+        "group": "dev",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+	]
+}

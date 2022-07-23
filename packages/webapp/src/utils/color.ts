@@ -1,6 +1,6 @@
-import { Color, HexColor, RGBColor } from 'src/types'
+import type { Color, HexColor, RGBColor } from 'src/types'
 
-export function hex(color: Color): string {
+export const hex = (color: Color): string => {
   if (color.type === 'rgb') {
     return `#${color.value.map((c) => c.toString(16).padStart(2, '0')).join('')}`
   }
@@ -12,7 +12,7 @@ export function hex(color: Color): string {
   throw new Error(`hex: Color type ${color.type} is not implemented`)
 }
 
-export function rgb(color: Color): string {
+export const rgb = (color: Color): string => {
   if (color.type === 'rgb') {
     return `rgb(${color.value[0]}, ${color.value[1]}, ${color.value[2]})`
   }
@@ -29,13 +29,13 @@ export function rgb(color: Color): string {
 }
 
 export const hexToRgb = (hex: HexColor): RGBColor => {
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex.value)
+  const result = /^#?([\da-f]{2})([\da-f]{2})([\da-f]{2})$/i.exec(hex.value)
   if (!result) {
     throw new Error(`hexToRgb: Invalid hex color ${hex.value}`)
   }
 
   return {
     type: 'rgb',
-    value: [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)],
+    value: [Number.parseInt(result[1]!, 16), Number.parseInt(result[2]!, 16), Number.parseInt(result[3]!, 16)],
   }
 }

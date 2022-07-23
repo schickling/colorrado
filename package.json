@@ -3,7 +3,8 @@
     "packages/*"
   ],
   "scripts": {
-    "build:ts": "tsc --build tsconfig.all.json",
+    "build:ts": "tsc --build tsconfig.json",
+    "build:clean": "fish -c 'rm -rf packages/**/dist **/node_modules/.vite*'",
     "dev:ts": "yarn build:ts --watch"
   },
   "devDependencies": {

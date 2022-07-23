@@ -1,10 +1,11 @@
 import cn from 'classnames'
+import { getMostSimilarColors } from 'colorrado'
 import { useMemo } from 'react'
-import { useAppState } from 'src/hooks/useAppState'
-import { AdditiveGradientVariant } from 'src/types'
 import { Variant } from 'src/components/Variant'
-import { relativeLuminance } from '~/utils/contrast'
-import { getMostSimilarColors } from '~/utils/color-clusters'
+import { useAppState } from 'src/hooks/useAppState'
+import type { AdditiveGradientVariant } from 'src/types'
+
+import { relativeLuminance } from '~/utils/contrast.js'
 
 const Page: React.FC = () => {
   const { colors } = useAppState()
@@ -24,8 +25,8 @@ const Page: React.FC = () => {
         {
           type: 'radial',
           stops: [
-            { color: { type: 'rgba', value: [...colorCluster3[0].value, 1] } },
-            { color: { type: 'rgba', value: [...colorCluster3[0].value, 0] } },
+            { color: { type: 'rgba', value: [...colorCluster3[0]!.value, 1] } },
+            { color: { type: 'rgba', value: [...colorCluster3[0]!.value, 0] } },
           ],
           posX: 0,
           posY: 0,
@@ -33,8 +34,8 @@ const Page: React.FC = () => {
         {
           type: 'radial',
           stops: [
-            { color: { type: 'rgba', value: [...colorCluster3[1].value, 1] } },
-            { color: { type: 'rgba', value: [...colorCluster3[1].value, 0] } },
+            { color: { type: 'rgba', value: [...colorCluster3[1]!.value, 1] } },
+            { color: { type: 'rgba', value: [...colorCluster3[1]!.value, 0] } },
           ],
           posX: 100,
           posY: 0,
@@ -42,8 +43,8 @@ const Page: React.FC = () => {
         {
           type: 'radial',
           stops: [
-            { color: { type: 'rgba', value: [...colorCluster3[2].value, 1] } },
-            { color: { type: 'rgba', value: [...colorCluster3[2].value, 0] } },
+            { color: { type: 'rgba', value: [...colorCluster3[2]!.value, 1] } },
+            { color: { type: 'rgba', value: [...colorCluster3[2]!.value, 0] } },
           ],
           posX: 100,
           posY: 100,
@@ -67,24 +68,24 @@ const Page: React.FC = () => {
           type: 'linear',
           angle: 336,
           stops: [
-            { color: { type: 'rgba', value: [...colors[0].value, 1] } },
-            { color: { type: 'rgba', value: [...colors[0].value, 0] } },
+            { color: { type: 'rgba', value: [...colors[0]!.value, 1] } },
+            { color: { type: 'rgba', value: [...colors[0]!.value, 0] } },
           ],
         },
         {
           type: 'linear',
           angle: 217,
           stops: [
-            { color: { type: 'rgba', value: [...colors[1].value, 1] } },
-            { color: { type: 'rgba', value: [...colors[1].value, 0] } },
+            { color: { type: 'rgba', value: [...colors[1]!.value, 1] } },
+            { color: { type: 'rgba', value: [...colors[1]!.value, 0] } },
           ],
         },
         {
           type: 'linear',
           angle: 127,
           stops: [
-            { color: { type: 'rgba', value: [...colors[2].value, 1] } },
-            { color: { type: 'rgba', value: [...colors[2].value, 0] } },
+            { color: { type: 'rgba', value: [...colors[2]!.value, 1] } },
+            { color: { type: 'rgba', value: [...colors[2]!.value, 0] } },
           ],
         },
       ],
@@ -96,24 +97,24 @@ const Page: React.FC = () => {
         {
           type: 'radial',
           stops: [
-            { color: { type: 'rgba', value: [...colors[0].value, 1] } },
-            { color: { type: 'rgba', value: [...colors[0].value, 0] } },
+            { color: { type: 'rgba', value: [...colors[0]!.value, 1] } },
+            { color: { type: 'rgba', value: [...colors[0]!.value, 0] } },
           ],
         },
         {
           type: 'linear',
           angle: 217,
           stops: [
-            { color: { type: 'rgba', value: [...colors[5].value, 1] } },
-            { color: { type: 'rgba', value: [...colors[5].value, 0] } },
+            { color: { type: 'rgba', value: [...colors[5]!.value, 1] } },
+            { color: { type: 'rgba', value: [...colors[5]!.value, 0] } },
           ],
         },
         {
           type: 'linear',
           angle: 127,
           stops: [
-            { color: { type: 'rgba', value: [...colors[2].value, 1] } },
-            { color: { type: 'rgba', value: [...colors[2].value, 0] } },
+            { color: { type: 'rgba', value: [...colors[2]!.value, 1] } },
+            { color: { type: 'rgba', value: [...colors[2]!.value, 0] } },
           ],
         },
       ],

@@ -1,39 +1,39 @@
 import cn from 'classnames'
 import { useMemo } from 'react'
-import { useAppState } from 'src/hooks/useAppState'
-import { Dropzone } from 'src/components/Dropzone'
+// import { Dropzone } from 'src/components/Dropzone'
 import { Variant } from 'src/components/Variant'
-import { SimpleGradientVariant } from 'src/types'
+import { useAppState } from 'src/hooks/useAppState'
+import type { SimpleGradientVariant } from 'src/types'
 
-export default function Index() {
+const Index = () => {
   const { colors } = useAppState()
   const variants = useMemo(() => {
     const v1: SimpleGradientVariant = {
       type: 'simple-gradient',
       gradient: {
         type: 'radial',
-        stops: [{ color: colors[0] }, { color: colors[1] }],
+        stops: [{ color: colors[0]! }, { color: colors[1]! }],
       },
     }
     const v2: SimpleGradientVariant = {
       type: 'simple-gradient',
       gradient: {
         type: 'radial',
-        stops: [{ color: colors[2] }, { color: colors[3] }],
+        stops: [{ color: colors[2]! }, { color: colors[3]! }],
       },
     }
     const v3: SimpleGradientVariant = {
       type: 'simple-gradient',
       gradient: {
         type: 'radial',
-        stops: [{ color: colors[6] }, { color: colors[7] }],
+        stops: [{ color: colors[6]! }, { color: colors[7]! }],
       },
     }
     const v4: SimpleGradientVariant = {
       type: 'simple-gradient',
       gradient: {
         type: 'radial',
-        stops: [{ color: colors[4] }, { color: colors[5] }],
+        stops: [{ color: colors[4]! }, { color: colors[5]! }],
       },
     }
 
@@ -48,3 +48,5 @@ export default function Index() {
     </div>
   )
 }
+
+export default Index
