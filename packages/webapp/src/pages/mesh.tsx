@@ -2,21 +2,39 @@ import { Fragment, useRef, useCallback } from 'react'
 import { Canvas as R3FCanvas, useThree, useFrame } from '@react-three/fiber'
 import { OrthographicCamera, PerspectiveCamera, OrbitControls } from '@react-three/drei'
 import { Mesh, DoubleSide, Uniform, Camera } from 'three'
-import { useMeshGradient1 } from 'src/hooks/useMeshGradient'
+import cn from 'classnames'
+import { MeshGradientConfig, Point, useMeshGradient1 } from 'src/hooks/useMeshGradient'
 import fragmentShader from '../shaders/mesh_fragment.glsl'
 import vertexShader from '../shaders/mesh_vertex.glsl'
 
 export default function Index() {
+  const config1 = useMeshGradient1()
+  const config2 = useMeshGradient1()
+  const config3 = useMeshGradient1()
+  const config4 = useMeshGradient1()
+
+  return (
+    <div className={cn('grid grid-cols-2 grid-rows-2 gap-1', 'flex-1')}>
+      <MeshGradient config={config1} />
+      <MeshGradient config={config2} />
+      <MeshGradient config={config3} />
+      <MeshGradient config={config4} />
+    </div>
+  )
+}
+
+type GradientProps = {
+  config: MeshGradientConfig
+}
+function MeshGradient({ config }: GradientProps) {
   const canvas = useRef<HTMLCanvasElement>(null)
   const cam = useRef<Camera>()
   const debug = false
 
-  const config = useMeshGradient1()
-
   return (
     <R3FCanvas
       ref={canvas}
-      style={{ position: 'absolute', width: 300, height: 300 }}
+      className="w-full h-full"
       dpr={window.devicePixelRatio}
       frameloop="demand"
       gl={{ preserveDrawingBuffer: true }}
@@ -34,7 +52,7 @@ export default function Index() {
       {Array.from({ length: config.dimensionY - 1 }, (_, i) => (
         <Fragment key={i}>
           {Array.from({ length: config.dimensionX - 1 }, (_, j) => (
-            <Gradient
+            <Patch
               key={j}
               debug={debug}
               corners={[
@@ -51,11 +69,11 @@ export default function Index() {
   )
 }
 
-type GradientProps = {
+type PatchProps = {
   debug: boolean
   corners: [Point, Point, Point, Point]
 }
-function Gradient({ debug, corners: points }: GradientProps) {
+function Patch({ debug, corners: points }: PatchProps) {
   const {
     size: { width, height },
   } = useThree()

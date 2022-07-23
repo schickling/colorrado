@@ -1,5 +1,4 @@
-import { detectDirtyColors, toRgbString } from 'colorrado'
-import cn from 'classnames'
+import { detectDirtyColors } from 'colorrado'
 import React from 'react'
 import { useAppState } from '~/hooks/useAppState'
 import { PreviewColor } from '~/components/Sidebar'
@@ -7,7 +6,6 @@ import { PreviewColor } from '~/components/Sidebar'
 const Page: React.FC = () => {
   return (
     <section className="flex-1 p-4 space-y-8 overflow-y-auto">
-      <span>TODO: Dirty Colors</span>
       <ColorList />
     </section>
   )
@@ -26,7 +24,7 @@ const ColorList: React.FC<{}> = ({}) => {
         <div className="flex gap-2">
           {dirty.map((color, i) => (
             // <div key={i} className={cn('rounded-full w-8 h-8')} style={{ background: toRgbString(color) }} />
-            <PreviewColor key={i} {...{color, colorIndex: i}} />
+            <PreviewColor key={i} {...{ color, colorIndex: i }} />
           ))}
         </div>
       </div>
@@ -34,7 +32,7 @@ const ColorList: React.FC<{}> = ({}) => {
         <div>Non-Dirty</div>
         <div className="flex gap-2">
           {nonDirty.map((color, i) => (
-            <PreviewColor key={i} {...{color, colorIndex: i}} />
+            <PreviewColor key={i} {...{ color, colorIndex: i }} />
             // <div key={i} className={cn('rounded-full w-8 h-8')} style={{ background: toRgbString(color) }} />
           ))}
         </div>
