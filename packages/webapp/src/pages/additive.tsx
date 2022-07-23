@@ -27,7 +27,12 @@ const Page: React.FC = () => {
       console.log({ clusterSize, nonDirtyColors, colors })
 
       colorCluster3 = getMostSimilarColors(niceColors, clusterSize, 0)
+      // colorCluster3 = niceColors
     } else {
+      colorCluster3 = colors
+    }
+
+    if (colorCluster3.length < 3) {
       colorCluster3 = colors
     }
 
